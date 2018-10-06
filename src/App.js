@@ -1,25 +1,19 @@
 import React, { Component } from 'react';
 import './App.css';
 import '../node_modules/font-awesome/css/font-awesome.min.css';
+import { Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 
-import WelcomeSection from './Home/WelcomeSection';
-import ClubSection from './Home/ClubSection';
-import InfoSection from './Home/InfoSection';
-import InstagramSection from './Home/InstagramSection';
-import SponsorsSection from './Home/SponsorsSection';
-import FooterSection from './Home/FooterSection';
+import Routes from './Routes';
+
+const history = createBrowserHistory();
 
 class App extends Component {
 	render() {
 		return (
-			<div className="App">
-				<WelcomeSection />
-				<ClubSection />
-				<InfoSection />
-				<InstagramSection />
-				<SponsorsSection />
-				<FooterSection />
-			</div>
+			<Router history={history}>
+				<Routes />
+			</Router>
 		);
 	}
 }
