@@ -17,7 +17,7 @@ class FooterSection extends Component {
 			.then(resp => resp.json()) // Transform the data into json
 			.then(data => {
 				console.log('WTF', data.name);
-				this.props.history.push('/bubblegum');
+				this.props.history.push('/members');
 			});
 	};
 
