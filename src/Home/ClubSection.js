@@ -36,19 +36,19 @@ export default class ClubSection extends Component {
 								<strong>President:</strong> Pat Ricchi
 							</li>
 							<li>
-								<strong>Vice President:</strong> Mike Vennard
+								<strong>Vice President:</strong> Lukas Evans
 							</li>
 							<li>
-								<strong>Treasurer:</strong> Joe Larson
+								<strong>Treasurer:</strong> Jacob Anderson
 							</li>
 							<li>
 								<strong>Secretary:</strong> Michael Gobeli
 							</li>
 							<li>
-								<strong>Sponsorship:</strong> Jake Mager
+								<strong>Sponsorship:</strong> Kaylynn Foster
 							</li>
 							<li>
-								<strong>Public Relations:</strong> Kyle Danko
+								<strong>Public Relations:</strong> Thomas Gunst
 							</li>
 							<li>
 								<strong>Equipment Manager:</strong> Mike Summerfield&nbsp;

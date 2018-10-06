@@ -12,22 +12,40 @@ export default class sponsorSection extends Component {
 						<img className="sponsorImage" src="http://mtufishing.club/images/sponsors/ig.png" />
 					</div>
 					<div className="sponsorImageContainer">
-						<img className="sponsorImage" src="http://mtufishing.club/images/sponsors/ig.png" />
+						<img
+							className="sponsorImage"
+							src="http://mtufishing.club/images/sponsors/troutUnlimited.png"
+						/>
 					</div>
 					<div className="sponsorImageContainer">
-						<img className="sponsorImage" src="http://mtufishing.club/images/sponsors/ig.png" />
+						<img
+							className="sponsorImage"
+							src="http://mtufishing.club/images/sponsors/kustomkicker.png"
+						/>
 					</div>
 					<div className="sponsorImageContainer">
-						<img className="sponsorImage" src="http://mtufishing.club/images/sponsors/ig.png" />
+						<img
+							className="sponsorImage"
+							src="http://mtufishing.club/images/sponsors/lowrance.png"
+						/>
 					</div>
 					<div className="sponsorImageContainer">
-						<img className="sponsorImage" src="http://mtufishing.club/images/sponsors/ig.png" />
+						<img className="sponsorImage" src="http://mtufishing.club/images/sponsors/mepps.png" />
 					</div>
 					<div className="sponsorImageContainer">
-						<img className="sponsorImage" src="http://mtufishing.club/images/sponsors/ig.png" />
+						<img
+							className="sponsorImage"
+							src="http://mtufishing.club/images/sponsors/Napoleon-Livestock.png"
+						/>
 					</div>
 					<div className="sponsorImageContainer">
-						<img className="sponsorImage" src="http://mtufishing.club/images/sponsors/ig.png" />
+						<img className="sponsorImage" src="http://mtufishing.club/images/sponsors/lews.png" />
+					</div>
+					<div className="sponsorImageContainer">
+						<img
+							className="sponsorImage"
+							src="http://mtufishing.club/images/sponsors/wildernessSports.png"
+						/>
 					</div>
 				</div>
 			</div>

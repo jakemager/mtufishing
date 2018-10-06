@@ -37,10 +37,7 @@ class FooterSection extends Component {
 					>
 						<span />
 					</a>
-					<a
-						className="icon fa fa-instagram"
-						href="https://www.facebook.com/TheFishingClubAtMichiganTech/?fref=ts"
-					>
+					<a className="icon fa fa-instagram" href="https://www.instagram.com/mtu_fishingclub/">
 						<span />
 					</a>
 					<a className="icon fa fa-envelope" href="kldanko@mtu.edu">
