@@ -1,0 +1,65 @@
+.infoSection {
+	background-color: #333;
+	color: rgba(255, 255, 255, 0.75);
+	background-attachment: fixed, fixed;
+	background-image: url(../assets/images/overlay1.png), url(../assets/images/sectionBackground.jpg);
+	background-size: auto, cover;
+
+	display: flex;
+	flex-direction: row;
+	font-size: calc(10px + 2vmin);
+	color: #000;
+	padding-bottom: 10vh;
+	padding-right: 25px;
+	height: 85vh;
+	align-items: center;
+	justify-content: center;
+}
+
+.infoConent {
+	width: 45vw;
+	height: 75vh;
+	object-fit: contain;
+}
+
+.boardList {
+	list-style: none;
+	text-align: left;
+}
+
+li {
+	padding-bottom: 8px;
+}
+
+li strong {
+	font-weight: 600;
+}
+
+.infoHeader {
+	color: #fff;
+	font-size: 1.8em;
+	margin-left: 3vw;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-weight: 200;
+	text-align: left;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+	width: 15vw;
+}
+
+.infoText {
+	color: #fff;
+	margin: 0 0 0 3vw;
+	text-align: left;
+	font-size: 0.8em;
+	font-weight: 200;
+	line-height: 1.6em;
+}
+
+a {
+	color: #fff;
+}
+
+a:hover {
+	color: #fee3b5;
+}

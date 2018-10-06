@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { GoogleLogin } from 'react-google-login';
+import '../node_modules/font-awesome/css/font-awesome.min.css';
+
+import WelcomeSection from './Home/WelcomeSection';
+import ClubSection from './Home/ClubSection';
+import InfoSection from './Home/InfoSection';
+import SponsorsSection from './Home/SponsorsSection';
+import FooterSection from './Home/FooterSection';
 
 class App extends Component {
 	constructor(props) {
@@ -15,29 +20,6 @@ class App extends Component {
 	componentDidMount() {
 		this.fetchInstagram();
 	}
-
-	onSignIn = user => {
-		console.log('ID Token: ', user);
-
-		fetch('http://localhost:8888/server/confirmUser.php', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				id_token: user.tokenId
-			})
-		})
-			.then(resp => resp.json()) // Transform the data into json
-			.then(function(data) {
-				// Create and append the li's to the ul
-				console.log('data', data.name);
-			});
-	};
-
-	responseGoogle = response => {
-		console.log('res', response);
-	};
 
 	fetchInstagram = () => {
 		fetch(
@@ -59,20 +41,20 @@ class App extends Component {
 		const { instagram, showInstaOverlay } = this.state;
 		return (
 			<div className="App">
-				<header className="App-header">
-					<img src={logo} className="App-logo" alt="logo" />
-				</header>
-				<div className="clubSection">
-					<p>FUCK</p>
-				</div>
-				<div className="instagramSection">
+				<WelcomeSection />
+				<ClubSection />
+				<InfoSection />
+				<div
+					className="instagramSection"
+					onClick={() => window.open('https://www.instagram.com/mtu_fishingclub/', '_blank')}
+				>
 					<div
 						onMouseEnter={() => this.setState({ showInstaOverlay: true })}
 						style={{ display: showInstaOverlay ? '' : 'none' }}
 						className="instagramLogoContainer"
-						onClick={() => window.open('https://www.instagram.com/mtu_fishingclub/', '_blank')}
 					>
 						<img
+							alt="Instagram Logo"
 							className="instagramLogo"
 							src="https://miamimusicproject.org/wp-content/uploads/2017/10/2475.new-instagram-text-logo.png"
 						/>
@@ -91,12 +73,8 @@ class App extends Component {
 						/>
 					))}
 				</div>
-				<GoogleLogin
-					clientId="1073431930974-rse6ic0teqt7jd401secn08m3ovdsf4l.apps.googleusercontent.com"
-					buttonText="Login"
-					onSuccess={this.onSignIn}
-					onFailure={this.onSignIn}
-				/>{' '}
+				<SponsorsSection />
+				<FooterSection />
 			</div>
 		);
 	}

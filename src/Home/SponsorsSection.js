@@ -1,0 +1,36 @@
+import React, { Component } from 'react';
+
+import './SponsorSection.css';
+
+export default class sponsorSection extends Component {
+	render() {
+		return (
+			<div className="sponsorSection">
+				<h2 className="sponsorHeader">Sponsors</h2>
+				<div className="sponsorBody">
+					<div className="sponsorImageContainer">
+						<img className="sponsorImage" src="http://mtufishing.club/images/sponsors/ig.png" />
+					</div>
+					<div className="sponsorImageContainer">
+						<img className="sponsorImage" src="http://mtufishing.club/images/sponsors/ig.png" />
+					</div>
+					<div className="sponsorImageContainer">
+						<img className="sponsorImage" src="http://mtufishing.club/images/sponsors/ig.png" />
+					</div>
+					<div className="sponsorImageContainer">
+						<img className="sponsorImage" src="http://mtufishing.club/images/sponsors/ig.png" />
+					</div>
+					<div className="sponsorImageContainer">
+						<img className="sponsorImage" src="http://mtufishing.club/images/sponsors/ig.png" />
+					</div>
+					<div className="sponsorImageContainer">
+						<img className="sponsorImage" src="http://mtufishing.club/images/sponsors/ig.png" />
+					</div>
+					<div className="sponsorImageContainer">
+						<img className="sponsorImage" src="http://mtufishing.club/images/sponsors/ig.png" />
+					</div>
+				</div>
+			</div>
+		);
+	}
+}
