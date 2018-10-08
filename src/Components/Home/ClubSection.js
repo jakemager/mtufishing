@@ -25,7 +25,7 @@ export default class ClubSection extends Component {
 						<img className="clubImage" src={groupImage} alt="Group" />
 					</div>
 				</div>
-				<div className="clubRow">
+				<div className="clubRow" style={{ marginTop: 45 }}>
 					<div className="clubConent">
 						<img className="clubImage" src={boardImage} alt="Board" />
 					</div>

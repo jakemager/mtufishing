@@ -21,14 +21,14 @@
 }
 
 .welcomeText {
-	font-size: 2.2em;
+	font-size: 28px;
 	margin: 0;
 	padding-top: 10px;
 	font-weight: 300;
 }
 
 .subWelcomeText {
-	font-size: 2.5em;
+	font-size: 36px;
 	margin: 0;
 	font-weight: 400;
 }
@@ -42,7 +42,7 @@
 .yeeyeeBoxContainer {
 	padding-top: 25px;
 	animation-name: increasePadding;
-	animation-duration: 3s;
+	animation-duration: 10s;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;

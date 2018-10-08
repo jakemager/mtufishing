@@ -1,24 +1,33 @@
 import React, { Component } from 'react';
 import { GoogleLogin } from 'react-google-login';
+import axios from 'axios';
 
 import './FooterSection.css';
 
 class FooterSection extends Component {
+	componentDidMount() {
+		const params = new URLSearchParams();
+		axios({
+			method: 'post',
+			url: 'http://localhost:8888/server/confirmUser.php',
+			data: params
+		}).then(res => {
+			console.log(res.data);
+		});
+	}
+
 	onSignIn = user => {
-		fetch('http://localhost:8888/server/confirmUser.php', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				id_token: user.tokenId
-			})
-		})
-			.then(resp => resp.json()) // Transform the data into json
-			.then(data => {
-				console.log('WTF', data.name);
-				this.props.history.push('/members');
-			});
+		console.log(user);
+
+		const params = new URLSearchParams();
+		params.append('id_token', user.tokenId);
+		axios({
+			method: 'post',
+			url: 'http://localhost:8888/server/confirmUser.php',
+			data: params
+		}).then(res => {
+			console.log(res.data);
+		});
 	};
 
 	responseGoogle = response => {
@@ -56,7 +65,7 @@ class FooterSection extends Component {
 						onFailure={this.onSignIn}
 					/>
 				</div>
-				Website by Jake Mager
+				<p style={{ paddingTop: 15 }}>Website by Jake Mager</p>
 			</div>
 		);
 	}
