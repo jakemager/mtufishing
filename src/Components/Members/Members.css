@@ -1,3 +1,21 @@
+.notLoggedInContainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.notLoggedInInner {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.notLoggedInLogo {
+	object-fit: contain;
+	height: 45vh;
+	margin-top: 5vh;
+}
+
 .googleSignIn {
 	background: #fff;
 	color: #f59f27;
@@ -5,10 +23,74 @@
 	border-radius: 5px;
 	padding: 10px;
 	font-weight: 600;
+	width: 200px;
 }
 
 .googleSignIn:hover {
 	background: #f59f27;
 	color: #fff;
+	cursor: pointer;
+}
+
+.header {
+	height: 55px;
+	width: 100vw;
+	background-color: #f59f27;
+	display: flex;
+	flex-direction: row;
+}
+
+.headerTitle {
+	color: #fff;
+	font-weight: 700;
+	font-size: 20px;
+	padding-top: 15px;
+	padding-left: 10px;
+}
+
+.headerMenu {
+	display: flex;
+	flex-direction: row;
+	margin-left: auto;
+}
+
+.headerOption {
+	color: #fff;
+	padding-right: 20px;
+	padding-left: 20px;
+	padding-top: 15px;
+	font-size: 20px;
+	font-weight: 400;
+}
+
+.headerOption:hover {
+	background-color: #fff;
+	color: #f59f27;
+	cursor: pointer;
+	border-bottom: 1px solid #f59f27;
+}
+
+.searchBox {
+	width: 190px;
+	height: 30px;
+	border: none;
+	border-radius: 3px;
+	margin-left: 20px;
+	margin-top: 12px;
+	padding-left: 10px;
+	font-size: 16px;
+}
+
+.sideMenuOption {
+	color: #fff;
+	font-weight: 600;
+	font-size: 18px;
+	padding: 15px 0 15px 15px;
+}
+
+.sideMenuOption:hover {
+	background-color: #fff;
+	opacity: 0.85;
+	color: #f59f27;
 	cursor: pointer;
 }

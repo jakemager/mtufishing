@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { GoogleLogin } from 'react-google-login';
 import axios from 'axios';
+import logo from '../../assets/images/logo.png';
+
+import UserSideMenu from '../SideMenu/UserSideMenu';
+import AdminSideMenu from '../SideMenu/AdminSideMenu';
+import Loading from '../Common/Loading';
 
 import './Members.css';
 
@@ -10,6 +15,8 @@ export default class Members extends Component {
 
 		this.state = {
 			loggedIn: false,
+			userSideMenuVisible: null,
+			adminSideMenuVisible: null,
 			user: {}
 		};
 	}
@@ -53,19 +60,60 @@ export default class Members extends Component {
 	};
 
 	render() {
-		const { loggedIn } = this.state;
+		const { loggedIn, user, userSideMenuVisible, adminSideMenuVisible } = this.state;
 
 		if (loggedIn) {
-			return <div>{JSON.stringify(this.state.user, null, 2)}</div>;
+			return (
+				<div>
+					<div className="header">
+						<div className="headerTitle">MTU Fishing Club Locker</div>
+						<input type="text" placeholder="Search Locker" className="searchBox" />
+						<div className="headerMenu">
+							<div className="headerOption" onClick={() => this.props.history.push('/')}>
+								Home
+							</div>
+							<div className="headerOption">Checkout (0)</div>
+							<div
+								className="headerOption"
+								onClick={() => this.setState({ adminSideMenuVisible: true })}
+							>
+								<i className="fa fa-cog" />
+							</div>
+							<div
+								className="headerOption"
+								onClick={() => this.setState({ userSideMenuVisible: true })}
+							>
+								<i className="fa fa-user" />
+							</div>
+						</div>
+					</div>
+
+					<UserSideMenu
+						visible={userSideMenuVisible}
+						userFullName={user.name}
+						hideMenu={() => this.setState({ userSideMenuVisible: false })}
+					/>
+
+					<AdminSideMenu
+						visible={adminSideMenuVisible}
+						hideMenu={() => this.setState({ adminSideMenuVisible: false })}
+					/>
+				</div>
+			);
 		} else {
 			return (
-				<GoogleLogin
-					className="googleSignIn fa fa-google"
-					clientId="1073431930974-rse6ic0teqt7jd401secn08m3ovdsf4l.apps.googleusercontent.com"
-					buttonText=" Sign in with Google"
-					onSuccess={this.onSignIn}
-					onFailure={this.onSignIn}
-				/>
+				<div className="notLoggedInContainer">
+					<div className="notLoggedInInner">
+						<img src={logo} className="notLoggedInLogo" alt="logo" />
+						<GoogleLogin
+							className="googleSignIn fa fa-google"
+							clientId="1073431930974-rse6ic0teqt7jd401secn08m3ovdsf4l.apps.googleusercontent.com"
+							buttonText=" Sign in with Google"
+							onSuccess={this.onSignIn}
+							onFailure={this.onSignIn}
+						/>
+					</div>
+				</div>
 			);
 		}
 	}

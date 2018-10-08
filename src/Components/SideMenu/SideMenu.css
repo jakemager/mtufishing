@@ -1,0 +1,73 @@
+.sideMenuContainer {
+	background-color: #cc8400;
+	background-attachment: fixed, fixed, fixed;
+	background-image: url(../../assets/images/overlay2.png), url(../../assets/images/overlay3.svg),
+		linear-gradient(45deg, #ffc966 5%, #ffa500 30%, #cc8400);
+	background-position: top left, center center, center center;
+	background-size: auto, cover, cover;
+
+	color: #fff;
+	height: 100vh;
+	position: absolute;
+	right: 0px;
+	top: 0;
+	z-index: 99;
+	text-align: center;
+	overflow-x: scroll;
+	white-space: nowrap;
+}
+
+.visible {
+	animation-name: increaseWidth;
+	animation-duration: 1s;
+	width: 225px;
+}
+
+@keyframes increaseWidth {
+	0% {
+		width: 0px;
+	}
+	100% {
+		width: 225px;
+	}
+}
+
+.hidden {
+	animation-name: decreaseWidth;
+	animation-duration: 1s;
+	width: 0px;
+}
+
+@keyframes decreaseWidth {
+	0% {
+		width: 225px;
+	}
+	100% {
+		width: 0px;
+	}
+}
+
+.sideMenuHeader {
+	display: flex;
+	flex-direction: row;
+	border-bottom: 2px solid #fff;
+}
+
+.headerTitle {
+	font-size: 18px;
+	font-weight: 700;
+	padding: 15px 0;
+}
+
+.headerArrow {
+	font-size: 18px;
+	font-weight: 700;
+	padding: 18px 0;
+	margin-left: 10px;
+	margin-right: 40px;
+}
+
+.headerArrow:hover {
+	opacity: 0.7;
+	cursor: pointer;
+}
