@@ -5,36 +5,31 @@ import axios from 'axios';
 import './FooterSection.css';
 
 class FooterSection extends Component {
-	componentDidMount() {
-		const params = new URLSearchParams();
-		axios({
-			method: 'post',
-			url: 'http://localhost:8888/server/confirmUser.php',
-			data: params
-		}).then(res => {
-			console.log(res.data);
-		});
-	}
-
 	onSignIn = user => {
-		console.log(user);
+		if (!!user.error) {
+			console.error(user);
+			return;
+		}
 
 		const params = new URLSearchParams();
-		params.append('id_token', user.tokenId);
+		params.append('idToken', user.tokenId);
+		params.append('expiresAt', user.tokenObj.expires_at);
+		params.append('accessToken', user.accessToken);
 		axios({
 			method: 'post',
-			url: 'http://localhost:8888/server/confirmUser.php',
+			url: 'http://localhost:8888/server/signIn.php',
 			data: params
 		}).then(res => {
-			console.log(res.data);
-		});
-	};
+			localStorage.setItem('mtuFishingAccessToken', user.accessToken);
+			localStorage.setItem('mtuFishingUserId', res.data.userId);
 
-	responseGoogle = response => {
-		console.log('res', response);
+			this.props.history.push('./members');
+		});
 	};
 
 	render() {
+		const accessToken = localStorage.getItem('mtuFishingAccessToken');
+
 		return (
 			<div className="footer">
 				<div className="icons">
@@ -50,20 +45,27 @@ class FooterSection extends Component {
 					<a className="icon fa fa-envelope" href="kldanko@mtu.edu">
 						<span />
 					</a>
-					<GoogleLogin
-						className="icon fa fa-sign-in"
-						style={{
-							backgroundColor: 'transparent',
-							border: 'none',
-							margin: 0,
-							padding: 0,
-							color: '#fff'
-						}}
-						clientId="1073431930974-rse6ic0teqt7jd401secn08m3ovdsf4l.apps.googleusercontent.com"
-						buttonText=""
-						onSuccess={this.onSignIn}
-						onFailure={this.onSignIn}
-					/>
+					{!!accessToken ? (
+						<i
+							className="icon fa fa-sign-in"
+							onClick={() => this.props.history.push('./members')}
+						/>
+					) : (
+						<GoogleLogin
+							className="icon fa fa-sign-in"
+							style={{
+								backgroundColor: 'transparent',
+								border: 'none',
+								margin: 0,
+								padding: 0,
+								color: '#fff'
+							}}
+							clientId="1073431930974-rse6ic0teqt7jd401secn08m3ovdsf4l.apps.googleusercontent.com"
+							buttonText=""
+							onSuccess={this.onSignIn}
+							onFailure={this.onSignIn}
+						/>
+					)}
 				</div>
 				<p style={{ paddingTop: 15 }}>Website by Jake Mager</p>
 			</div>
