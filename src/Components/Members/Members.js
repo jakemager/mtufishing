@@ -5,7 +5,7 @@ import logo from '../../assets/images/logo.png';
 
 import UserSideMenu from '../SideMenu/UserSideMenu';
 import AdminSideMenu from '../SideMenu/AdminSideMenu';
-import Loading from '../Common/Loading';
+import Locker from '../Locker/Locker';
 
 import './Members.css';
 
@@ -86,6 +86,9 @@ export default class Members extends Component {
 								<i className="fa fa-user" />
 							</div>
 						</div>
+					</div>
+					<div style={{ display: 'flex', justifyContent: 'center' }}>
+						<Locker />
 					</div>
 
 					<UserSideMenu

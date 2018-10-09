@@ -1,0 +1,42 @@
+.lockerContainer {
+	display: flex;
+	width: 85vw;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-self: center;
+}
+
+.itemContainer {
+	width: 250px;
+	height: 250px;
+	border: 2px solid black;
+	border-radius: 4px;
+	margin-top: 15px;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+
+.itemImageContainer {
+	padding-top: 10px;
+	width: 100%;
+	height: 175px;
+}
+.itemImage {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+.itemTitle {
+	font-size: 18px;
+	font-weight: 500;
+	padding-top: 8px;
+}
+
+.itemAvailability {
+	font-size: 15px;
+	font-weight: 400;
+	padding-top: 5px;
+}
