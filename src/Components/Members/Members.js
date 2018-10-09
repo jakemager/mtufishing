@@ -17,7 +17,8 @@ export default class Members extends Component {
 			loggedIn: false,
 			userSideMenuVisible: null,
 			adminSideMenuVisible: null,
-			user: {}
+			user: {},
+			lockerFilter: ''
 		};
 	}
 
@@ -60,14 +61,20 @@ export default class Members extends Component {
 	};
 
 	render() {
-		const { loggedIn, user, userSideMenuVisible, adminSideMenuVisible } = this.state;
+		const { loggedIn, user, userSideMenuVisible, adminSideMenuVisible, lockerFilter } = this.state;
 
 		if (loggedIn) {
 			return (
 				<div>
 					<div className="header">
 						<div className="headerTitle">MTU Fishing Club Locker</div>
-						<input type="text" placeholder="Search Locker" className="searchBox" />
+						<input
+							type="text"
+							placeholder="Search Locker"
+							className="searchBox"
+							value={lockerFilter}
+							onChange={e => this.setState({ lockerFilter: e.target.value })}
+						/>
 						<div className="headerMenu">
 							<div className="headerOption" onClick={() => this.props.history.push('/')}>
 								Home
@@ -88,7 +95,7 @@ export default class Members extends Component {
 						</div>
 					</div>
 					<div style={{ display: 'flex', justifyContent: 'center' }}>
-						<Locker />
+						<Locker filter={lockerFilter} />
 					</div>
 
 					<UserSideMenu
