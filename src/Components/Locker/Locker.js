@@ -63,6 +63,7 @@ export default class Locker extends Component {
 
 		return filteredItems.map(item => {
 			let inCart = cartItems.includes(item);
+			let isHover = hoveredItem === item.Id;
 
 			return (
 				<div
@@ -93,7 +94,7 @@ export default class Locker extends Component {
 					>
 						<div className="itemTitle">{item.name}</div>
 						<div className="itemAvailability">{item.quantityAvailable} Available</div>
-						{hoveredItem === item.Id ? (
+						{isHover ? (
 							<div className="itemIconsContainer">
 								<i className="itemIcon info fa fa-info" />
 								{inCart ? (
