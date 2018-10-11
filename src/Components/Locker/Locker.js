@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
+
+import { addToCheckout } from '../../actions/lockerRoom';
 
 import Loading from '../Common/Loading';
 
 import './Locker.css';
 
-export default class Locker extends Component {
+class Locker extends Component {
 	constructor(props) {
 		super(props);
 
@@ -22,7 +25,7 @@ export default class Locker extends Component {
 		this.getItems();
 	}
 
-	componentDidUpdate(prevProps) {
+	componentDidUpdate(prevProps, prevState) {
 		const { filter } = this.props;
 		const { items } = this.state;
 
@@ -59,10 +62,11 @@ export default class Locker extends Component {
 	};
 
 	renderItems = () => {
-		const { filteredItems, hoveredItem, cartItems } = this.state;
+		const { addToCheckout, checkout } = this.props;
+		const { filteredItems, hoveredItem } = this.state;
 
 		return filteredItems.map(item => {
-			let inCart = cartItems.includes(item);
+			let inCart = checkout.filter(checkoutItem => checkoutItem === item).length;
 			let isHover = hoveredItem === item.Id;
 
 			return (
@@ -103,7 +107,7 @@ export default class Locker extends Component {
 										className="itemIcon minus fa fa-minus"
 									/>
 								) : (
-									<i onClick={() => this.addToCart(item)} className="itemIcon plus fa fa-plus" />
+									<i onClick={() => addToCheckout(item)} className="itemIcon plus fa fa-plus" />
 								)}
 							</div>
 						) : (
@@ -122,3 +126,14 @@ export default class Locker extends Component {
 		else return <div className="lockerContainer">{this.renderItems()}</div>;
 	}
 }
+
+const mapStateToProps = state => ({
+	checkout: state.lockerRoom.checkout
+});
+
+export default connect(
+	mapStateToProps,
+	{
+		addToCheckout
+	}
+)(Locker);

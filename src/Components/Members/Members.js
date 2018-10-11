@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { GoogleLogin } from 'react-google-login';
 import axios from 'axios';
 import logo from '../../assets/images/logo.png';
+
+import { addToCheckout } from '../../actions/lockerRoom';
 
 import UserSideMenu from '../SideMenu/UserSideMenu';
 import AdminSideMenu from '../SideMenu/AdminSideMenu';
@@ -9,7 +12,7 @@ import Locker from '../Locker/Locker';
 
 import './Members.css';
 
-export default class Members extends Component {
+class Members extends Component {
 	constructor(props) {
 		super(props);
 
@@ -18,6 +21,7 @@ export default class Members extends Component {
 			userSideMenuVisible: null,
 			adminSideMenuVisible: null,
 			user: {},
+			cartItems: [],
 			lockerFilter: ''
 		};
 	}
@@ -61,8 +65,14 @@ export default class Members extends Component {
 	};
 
 	render() {
-		const { loggedIn, user, userSideMenuVisible, adminSideMenuVisible, lockerFilter } = this.state;
-
+		const {
+			loggedIn,
+			user,
+			userSideMenuVisible,
+			adminSideMenuVisible,
+			lockerFilter,
+			cartItems
+		} = this.state;
 		if (loggedIn) {
 			return (
 				<div>
@@ -79,13 +89,23 @@ export default class Members extends Component {
 							<div className="headerOption" onClick={() => this.props.history.push('/')}>
 								Home
 							</div>
-							<div className="headerOption">Checkout (0)</div>
 							<div
 								className="headerOption"
-								onClick={() => this.setState({ adminSideMenuVisible: true })}
+								onClick={() => this.props.history.push('./members/checkout')}
 							>
-								<i className="fa fa-cog" />
+								Checkout ({cartItems.length})
 							</div>
+							{user.admin ? (
+								<div
+									className="headerOption"
+									onClick={() => this.setState({ adminSideMenuVisible: true })}
+								>
+									<i className="fa fa-cog" />
+								</div>
+							) : (
+								<div />
+							)}
+
 							<div
 								className="headerOption"
 								onClick={() => this.setState({ userSideMenuVisible: true })}
@@ -95,7 +115,7 @@ export default class Members extends Component {
 						</div>
 					</div>
 					<div style={{ display: 'flex', justifyContent: 'center' }}>
-						<Locker filter={lockerFilter} />
+						<Locker filter={lockerFilter} updateCart={cartItems => this.setState({ cartItems })} />
 					</div>
 
 					<UserSideMenu
@@ -128,3 +148,12 @@ export default class Members extends Component {
 		}
 	}
 }
+
+const mapStateToProps = state => ({});
+
+export default connect(
+	mapStateToProps,
+	{
+		addToCheckout
+	}
+)(Members);
