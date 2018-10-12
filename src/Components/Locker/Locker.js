@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
-import { addToCheckout } from '../../actions/lockerRoom';
+import { addToCheckout, removeFromCheckout } from '../../actions/lockerRoom';
 
 import Loading from '../Common/Loading';
 
@@ -50,23 +50,13 @@ class Locker extends Component {
 		});
 	};
 
-	addToCart = item => {
-		const { cartItems } = this.state;
-		this.setState({ cartItems: [...cartItems, item] });
-	};
-
-	removeFromCart = itemToRemove => {
-		const { cartItems } = this.state;
-		let newCartItems = cartItems.filter(item => item !== itemToRemove);
-		this.setState({ cartItems: newCartItems });
-	};
-
 	renderItems = () => {
-		const { addToCheckout, checkout } = this.props;
+		const { addToCheckout, removeFromCheckout, checkout } = this.props;
 		const { filteredItems, hoveredItem } = this.state;
 
 		return filteredItems.map(item => {
-			let inCart = checkout.filter(checkoutItem => checkoutItem === item).length;
+			let inCart = checkout.filter(checkoutItem => checkoutItem.Id === item.Id).length;
+
 			let isHover = hoveredItem === item.Id;
 
 			return (
@@ -103,7 +93,7 @@ class Locker extends Component {
 								<i className="itemIcon info fa fa-info" />
 								{inCart ? (
 									<i
-										onClick={() => this.removeFromCart(item)}
+										onClick={() => removeFromCheckout(item)}
 										className="itemIcon minus fa fa-minus"
 									/>
 								) : (
@@ -134,6 +124,7 @@ const mapStateToProps = state => ({
 export default connect(
 	mapStateToProps,
 	{
-		addToCheckout
+		addToCheckout,
+		removeFromCheckout
 	}
 )(Locker);

@@ -21,13 +21,18 @@ class Members extends Component {
 			userSideMenuVisible: null,
 			adminSideMenuVisible: null,
 			user: {},
-			cartItems: [],
 			lockerFilter: ''
 		};
 	}
 
 	componentDidMount() {
 		this.getUser();
+	}
+
+	componentDidUpdate(prevProps) {
+		// const {checkout} = this.props;
+		// if (prevProps.checkout !== checkout) {
+		// }
 	}
 
 	getUser = () => {
@@ -65,14 +70,9 @@ class Members extends Component {
 	};
 
 	render() {
-		const {
-			loggedIn,
-			user,
-			userSideMenuVisible,
-			adminSideMenuVisible,
-			lockerFilter,
-			cartItems
-		} = this.state;
+		const { checkout } = this.props;
+		const { loggedIn, user, userSideMenuVisible, adminSideMenuVisible, lockerFilter } = this.state;
+
 		if (loggedIn) {
 			return (
 				<div>
@@ -93,7 +93,7 @@ class Members extends Component {
 								className="headerOption"
 								onClick={() => this.props.history.push('./members/checkout')}
 							>
-								Checkout ({cartItems.length})
+								Checkout ({checkout.length})
 							</div>
 							{user.admin ? (
 								<div
@@ -115,7 +115,7 @@ class Members extends Component {
 						</div>
 					</div>
 					<div style={{ display: 'flex', justifyContent: 'center' }}>
-						<Locker filter={lockerFilter} updateCart={cartItems => this.setState({ cartItems })} />
+						<Locker filter={lockerFilter} />
 					</div>
 
 					<UserSideMenu
@@ -149,7 +149,9 @@ class Members extends Component {
 	}
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+	checkout: state.lockerRoom.checkout
+});
 
 export default connect(
 	mapStateToProps,
