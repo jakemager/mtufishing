@@ -70,12 +70,12 @@ class Locker extends Component {
 						<div className="itemImageContainer itemImageContainerOverlay">
 							<div className="inCartOverlay itemImage">
 								<i className="inCartIcon fa fa-check" />
-								<img src={`${item.image}`} alt={item.name} className="itemImage" />
+								<img src={`/${item.image}`} alt={item.name} className="itemImage" />
 							</div>
 						</div>
 					) : (
 						<div className="itemImageContainer">
-							<img src={`${item.image}`} alt={item.name} className="itemImage" />
+							<img src={`/${item.image}`} alt={item.name} className="itemImage" />
 						</div>
 					)}
 

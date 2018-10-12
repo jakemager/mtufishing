@@ -5,6 +5,7 @@ import axios from 'axios';
 import logo from '../../assets/images/logo.png';
 
 import { addToCheckout } from '../../actions/lockerRoom';
+import { setUser } from '../../actions/user';
 
 import UserSideMenu from '../SideMenu/UserSideMenu';
 import AdminSideMenu from '../SideMenu/AdminSideMenu';
@@ -44,7 +45,7 @@ class Members extends Component {
 			url: 'http://localhost:8888/server/getUser.php',
 			data: params
 		}).then(res => {
-			if (res.data) this.setState({ user: res.data, loggedIn: true });
+			if (res.data) this.props.setUser(res.data);
 		});
 	};
 
@@ -70,10 +71,10 @@ class Members extends Component {
 	};
 
 	render() {
-		const { checkout } = this.props;
-		const { loggedIn, user, userSideMenuVisible, adminSideMenuVisible, lockerFilter } = this.state;
+		const { checkout, user } = this.props;
+		const { loggedIn, userSideMenuVisible, adminSideMenuVisible, lockerFilter } = this.state;
 
-		if (loggedIn) {
+		if (!!user) {
 			return (
 				<div>
 					<div className="header">
@@ -91,7 +92,7 @@ class Members extends Component {
 							</div>
 							<div
 								className="headerOption"
-								onClick={() => this.props.history.push('./members/checkout')}
+								onClick={() => this.props.history.push('/members/checkout')}
 							>
 								Checkout ({checkout.length})
 							</div>
@@ -150,12 +151,14 @@ class Members extends Component {
 }
 
 const mapStateToProps = state => ({
-	checkout: state.lockerRoom.checkout
+	checkout: state.lockerRoom.checkout,
+	user: state.user.user
 });
 
 export default connect(
 	mapStateToProps,
 	{
-		addToCheckout
+		addToCheckout,
+		setUser
 	}
 )(Members);
