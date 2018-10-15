@@ -4,11 +4,10 @@ import { GoogleLogin } from 'react-google-login';
 import axios from 'axios';
 import logo from '../../assets/images/logo.png';
 
+import { openSideMenu } from '../../actions/overlays';
 import { addToCheckout } from '../../actions/lockerRoom';
 import { setUser } from '../../actions/user';
 
-import UserSideMenu from '../SideMenu/UserSideMenu';
-import AdminSideMenu from '../SideMenu/AdminSideMenu';
 import Locker from '../Locker/Locker';
 
 import './Members.css';
@@ -19,35 +18,14 @@ class Members extends Component {
 
 		this.state = {
 			loggedIn: false,
-			userSideMenuVisible: null,
-			adminSideMenuVisible: null,
 			user: {},
 			lockerFilter: ''
 		};
 	}
 
 	componentDidMount() {
-		this.getUser();
+		if (!this.props.user.userId) this.props.setUser();
 	}
-
-	componentDidUpdate(prevProps) {
-		// const {checkout} = this.props;
-		// if (prevProps.checkout !== checkout) {
-		// }
-	}
-
-	getUser = () => {
-		const params = new URLSearchParams();
-		params.append('accessToken', localStorage.getItem('mtuFishingAccessToken'));
-		params.append('userId', localStorage.getItem('mtuFishingUserId'));
-		axios({
-			method: 'post',
-			url: 'http://localhost:8888/server/getUser.php',
-			data: params
-		}).then(res => {
-			if (res.data) this.props.setUser(res.data);
-		});
-	};
 
 	onSignIn = user => {
 		if (!!user.error) {
@@ -71,10 +49,10 @@ class Members extends Component {
 	};
 
 	render() {
-		const { checkout, user } = this.props;
-		const { loggedIn, userSideMenuVisible, adminSideMenuVisible, lockerFilter } = this.state;
+		const { checkout, user, openSideMenu } = this.props;
+		const { loggedIn, lockerFilter } = this.state;
 
-		if (!!user) {
+		if (!!user.userId) {
 			return (
 				<div>
 					<div className="header">
@@ -97,20 +75,14 @@ class Members extends Component {
 								Checkout ({checkout.length})
 							</div>
 							{user.admin ? (
-								<div
-									className="headerOption"
-									onClick={() => this.setState({ adminSideMenuVisible: true })}
-								>
+								<div className="headerOption" onClick={() => openSideMenu('admin')}>
 									<i className="fa fa-cog" />
 								</div>
 							) : (
 								<div />
 							)}
 
-							<div
-								className="headerOption"
-								onClick={() => this.setState({ userSideMenuVisible: true })}
-							>
+							<div className="headerOption" onClick={() => openSideMenu('user')}>
 								<i className="fa fa-user" />
 							</div>
 						</div>
@@ -118,17 +90,6 @@ class Members extends Component {
 					<div style={{ display: 'flex', justifyContent: 'center' }}>
 						<Locker filter={lockerFilter} />
 					</div>
-
-					<UserSideMenu
-						visible={userSideMenuVisible}
-						userFullName={user.name}
-						hideMenu={() => this.setState({ userSideMenuVisible: false })}
-					/>
-
-					<AdminSideMenu
-						visible={adminSideMenuVisible}
-						hideMenu={() => this.setState({ adminSideMenuVisible: false })}
-					/>
 				</div>
 			);
 		} else {
@@ -159,6 +120,7 @@ export default connect(
 	mapStateToProps,
 	{
 		addToCheckout,
-		setUser
+		setUser,
+		openSideMenu
 	}
 )(Members);

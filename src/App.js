@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Provider, connect } from 'react-redux';
+import { Provider } from 'react-redux';
 import '../node_modules/font-awesome/css/font-awesome.min.css';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
+import axios from 'axios';
 
 import store from './store';
 import Routes from './Routes';

@@ -1,21 +1,31 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import { closeSideMenu } from '../../actions/overlays';
 
 import './SideMenu.css';
 
-export default class UserSideMenu extends Component {
+class UserSideMenu extends Component {
 	render() {
-		const { visible, userFullName, hideMenu } = this.props;
-
-		if (visible === null) return <span />;
+		const { visible, user, closeSideMenu } = this.props;
 
 		return (
 			<div className={`sideMenuContainer ${visible ? 'visible' : 'hidden'}`}>
 				<div className="sideMenuHeader">
-					<i className="headerArrow fa fa-arrow-right" onClick={hideMenu} />
-					<div className="headerTitle">{userFullName}</div>
+					<i className="headerArrow fa fa-arrow-right" onClick={() => closeSideMenu()} />
+					<div className="headerTitle">{user.name}</div>
 				</div>
 				<div className="sideMenuOption">Logout</div>
 			</div>
 		);
 	}
 }
+
+const mapStateToProps = state => ({
+	user: state.user.user
+});
+
+export default connect(
+	mapStateToProps,
+	{ closeSideMenu }
+)(UserSideMenu);

@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
+import { closeSideMenu } from '../../actions/overlays';
 import './SideMenu.css';
 
-export default class AdminSideMenu extends Component {
+class AdminSideMenu extends Component {
 	render() {
-		const { visible, hideMenu } = this.props;
-
-		if (visible === null) return <span />;
+		const { visible, closeSideMenu } = this.props;
 
 		return (
 			<div className={`sideMenuContainer ${visible ? 'visible' : 'hidden'}`}>
 				<div className="sideMenuHeader">
-					<i className="headerArrow fa fa-arrow-right" onClick={hideMenu} />
+					<i className="headerArrow fa fa-arrow-right" onClick={() => closeSideMenu()} />
 					<div className="headerTitle">Manage</div>
 				</div>
 				<div className="sideMenuOption">Users</div>
@@ -23,3 +23,12 @@ export default class AdminSideMenu extends Component {
 		);
 	}
 }
+
+const mapStateToProps = state => ({
+	user: state.user.user
+});
+
+export default connect(
+	mapStateToProps,
+	{ closeSideMenu }
+)(AdminSideMenu);

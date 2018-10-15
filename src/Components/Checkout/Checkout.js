@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
+import { setUser } from '../../actions/user';
+import { openSideMenu } from '../../actions/overlays';
 import { addToCheckout, removeFromCheckout } from '../../actions/lockerRoom';
 import CheckoutItem from './CheckoutItem';
 
@@ -17,8 +19,12 @@ class Checkout extends Component {
 		};
 	}
 
+	componentDidMount() {
+		if (!this.props.user.userId) this.props.setUser();
+	}
+
 	render() {
-		const { checkout, user, removeFromCheckout } = this.props;
+		const { checkout, user, removeFromCheckout, openSideMenu } = this.props;
 		const { today, returnDate } = this.state;
 		return (
 			<div>
@@ -35,19 +41,13 @@ class Checkout extends Component {
 							Back
 						</div>
 						{user.admin ? (
-							<div
-								className="headerOption"
-								onClick={() => this.setState({ adminSideMenuVisible: true })}
-							>
+							<div className="headerOption" onClick={() => openSideMenu('admin')}>
 								<i className="fa fa-cog" />
 							</div>
 						) : (
 							<div />
 						)}
-						<div
-							className="headerOption"
-							onClick={() => this.setState({ userSideMenuVisible: true })}
-						>
+						<div className="headerOption" onClick={() => openSideMenu('user')}>
 							<i className="fa fa-user" />
 						</div>
 					</div>
@@ -106,7 +106,9 @@ const mapStateToProps = state => ({
 export default connect(
 	mapStateToProps,
 	{
+		setUser,
 		addToCheckout,
-		removeFromCheckout
+		removeFromCheckout,
+		openSideMenu
 	}
 )(Checkout);

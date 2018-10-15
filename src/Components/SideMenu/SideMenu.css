@@ -5,7 +5,6 @@
 		linear-gradient(45deg, #ffc966 5%, #ffa500 30%, #cc8400);
 	background-position: top left, center center, center center;
 	background-size: auto, cover, cover;
-
 	color: #fff;
 	height: 100vh;
 	position: absolute;
@@ -15,12 +14,14 @@
 	text-align: center;
 	overflow-x: scroll;
 	white-space: nowrap;
+	display: none;
 }
 
 .visible {
 	animation-name: increaseWidth;
 	animation-duration: 1s;
 	width: 225px;
+	display: block;
 }
 
 @keyframes increaseWidth {
