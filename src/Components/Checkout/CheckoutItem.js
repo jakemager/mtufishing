@@ -17,12 +17,39 @@ export default class CheckoutItem extends Component {
 		return options;
 	};
 
+	getInStock = () => {
+		const { quantityAvailable } = this.props;
+		if (quantityAvailable) {
+			return (
+				<p className="inStock">
+					<span style={{ color: 'green' }}>In Stock</span> - {quantityAvailable} Available
+				</p>
+			);
+		} else {
+			return <span style={{ color: 'red' }}>Not Stock</span>;
+		}
+	};
+
 	render() {
-		const { name, image } = this.props;
+		const { name, image, remove } = this.props;
 
 		return (
-			<div>
-				{name}, <select>{this.createSelectOptions()}</select>
+			<div className="checkoutItemContainer">
+				<div className="checkoutItemDetailsContainer">
+					<img src={`/${image}`} />
+					<div className="checkoutItemDetails">
+						<div className="details">
+							<p className="title">{name}</p>
+							{this.getInStock()}
+						</div>
+						<div className="deleteLink" onClick={remove}>
+							Delete
+						</div>
+					</div>
+				</div>
+				<select className="selectBox" defaultValue={1}>
+					{this.createSelectOptions()}
+				</select>
 			</div>
 		);
 	}

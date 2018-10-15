@@ -1,7 +1,16 @@
 import { ADD_TO_CHECKOUT, REMOVE_FROM_CHECKOUT } from '../constants/actionTypes/lockerRoom';
 
 const initialState = {
-	checkout: []
+	checkout: [
+		{
+			Id: '4',
+			name: '5ft Ultra Light Rod',
+			quantity: '1',
+			quantityAvailable: '2',
+			description: null,
+			image: 'no-img.jpg'
+		}
+	]
 };
 
 export default function(state = initialState, action) {
@@ -15,7 +24,7 @@ export default function(state = initialState, action) {
 		case REMOVE_FROM_CHECKOUT:
 			return {
 				...state,
-				checkout: state.checkout.filter(checkoutItem => checkoutItem !== action.item)
+				checkout: state.checkout.filter(checkoutItem => checkoutItem.Id !== action.itemId)
 			};
 
 		default:

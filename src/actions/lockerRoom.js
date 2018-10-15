@@ -5,7 +5,7 @@ export const addToCheckout = item => ({
 	item
 });
 
-export const removeFromCheckout = item => ({
+export const removeFromCheckout = itemId => ({
 	type: types.REMOVE_FROM_CHECKOUT,
-	item
+	itemId
 });

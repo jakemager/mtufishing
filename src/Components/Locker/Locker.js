@@ -59,53 +59,71 @@ class Locker extends Component {
 
 			let isHover = hoveredItem === item.Id;
 
-			return (
-				<div
-					key={item.Id}
-					className="itemContainer"
-					onMouseEnter={() => this.setState({ hoveredItem: item.Id })}
-					onMouseLeave={() => this.setState({ hoveredItem: null })}
-				>
-					{inCart ? (
-						<div className="itemImageContainer itemImageContainerOverlay">
+			if (item.quantityAvailable > 0)
+				return (
+					<div
+						key={item.Id}
+						className="itemContainer"
+						onMouseEnter={() => this.setState({ hoveredItem: item.Id })}
+						onMouseLeave={() => this.setState({ hoveredItem: null })}
+					>
+						{inCart ? (
+							<div className="itemImageContainer itemImageContainerOverlay">
+								<div className="inCartOverlay itemImage">
+									<i className="inCartIcon fa fa-check" />
+									<img src={`/${item.image}`} alt={item.name} className="itemImage" />
+								</div>
+							</div>
+						) : (
+							<div className="itemImageContainer">
+								<img src={`/${item.image}`} alt={item.name} className="itemImage" />
+							</div>
+						)}
+
+						<div
+							style={
+								inCart
+									? { backgroundColor: '#97db8f', height: '100%', zIndex: '4' }
+									: { height: '100%' }
+							}
+						>
+							<div className="itemTitle">{item.name}</div>
+							<div className="itemAvailability">{item.quantityAvailable} Available</div>
+							{isHover ? (
+								<div className="itemIconsContainer">
+									<i className="itemIcon info fa fa-info" />
+									{inCart ? (
+										<i
+											onClick={() => removeFromCheckout(item.Id)}
+											className="itemIcon minus fa fa-minus"
+										/>
+									) : (
+										<i onClick={() => addToCheckout(item)} className="itemIcon plus fa fa-plus" />
+									)}
+								</div>
+							) : (
+								<span />
+							)}
+						</div>
+					</div>
+				);
+			else
+				return (
+					<div key={item.Id} className="itemContainer">
+						<div className="itemImageContainer itemImageContainerOverlayNotAvaliable">
 							<div className="inCartOverlay itemImage">
-								<i className="inCartIcon fa fa-check" />
 								<img src={`/${item.image}`} alt={item.name} className="itemImage" />
 							</div>
 						</div>
-					) : (
-						<div className="itemImageContainer">
-							<img src={`/${item.image}`} alt={item.name} className="itemImage" />
-						</div>
-					)}
 
-					<div
-						style={
-							inCart
-								? { backgroundColor: '#97db8f', height: '100%', zIndex: '4' }
-								: { height: '100%' }
-						}
-					>
-						<div className="itemTitle">{item.name}</div>
-						<div className="itemAvailability">{item.quantityAvailable} Available</div>
-						{isHover ? (
-							<div className="itemIconsContainer">
-								<i className="itemIcon info fa fa-info" />
-								{inCart ? (
-									<i
-										onClick={() => removeFromCheckout(item)}
-										className="itemIcon minus fa fa-minus"
-									/>
-								) : (
-									<i onClick={() => addToCheckout(item)} className="itemIcon plus fa fa-plus" />
-								)}
+						<div style={{ backgroundColor: '#fd868d', height: '100%', zIndex: '4' }}>
+							<div className="itemTitle">{item.name}</div>
+							<div className="itemAvailability" style={{ fontWeight: 500 }}>
+								Not Available
 							</div>
-						) : (
-							<span />
-						)}
+						</div>
 					</div>
-				</div>
-			);
+				);
 		});
 	};
 

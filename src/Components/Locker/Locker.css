@@ -5,6 +5,7 @@
 	flex-wrap: wrap;
 	justify-content: space-around;
 	align-self: center;
+	margin-bottom: 45px;
 }
 
 .itemContainer {
@@ -56,6 +57,19 @@
 	left: 0;
 	right: 0;
 	background: rgb(38, 185, 1, 0.5);
+	z-index: 4;
+}
+
+.itemImageContainerOverlayNotAvaliable:before {
+	height: 100%;
+	content: '';
+	display: block;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: rgba(255, 0, 0, 0.5);
 	z-index: 4;
 }
 

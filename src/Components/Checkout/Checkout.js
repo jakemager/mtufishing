@@ -5,14 +5,21 @@ import axios from 'axios';
 import { addToCheckout, removeFromCheckout } from '../../actions/lockerRoom';
 import CheckoutItem from './CheckoutItem';
 
+import './Checkout.css';
+
 class Checkout extends Component {
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			today: new Date(),
+			returnDate: ''
+		};
 	}
 
 	render() {
-		const { checkout, user } = this.props;
-
+		const { checkout, user, removeFromCheckout } = this.props;
+		const { today, returnDate } = this.state;
 		return (
 			<div>
 				<div className="header">
@@ -45,10 +52,47 @@ class Checkout extends Component {
 						</div>
 					</div>
 				</div>
-				{checkout.map(item => {
-					const { name, image, quantityAvailable } = item;
-					return <CheckoutItem name={name} image={image} quantityAvailable={quantityAvailable} />;
-				})}
+				<div className="cartContainer">
+					<div className="cart">
+						<h3>Locker Checkout</h3>
+
+						{checkout.map(item => {
+							const { Id, name, image, quantityAvailable } = item;
+							return (
+								<CheckoutItem
+									remove={() => removeFromCheckout(Id)}
+									name={name}
+									image={image}
+									quantityAvailable={quantityAvailable}
+								/>
+							);
+						})}
+
+						<div className="checkoutForm">
+							<div className="dateForms">
+								<div>
+									Checkout Date:
+									<input
+										className="datePicker"
+										type="date"
+										disabled
+										value={today.toJSON().slice(0, 10)}
+									/>
+								</div>
+								<div style={{ marginLeft: 15 }}>
+									Return Date:
+									<input
+										className="datePicker"
+										type="date"
+										value={returnDate}
+										onChange={e => this.setState({ returnDate: e.target.value })}
+									/>
+								</div>
+							</div>
+							<button>Checkout</button>
+						</div>
+					</div>
+				</div>
 			</div>
 		);
 	}
