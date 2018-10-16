@@ -34,10 +34,7 @@ class Checkout extends Component {
 						<div className="headerOption" onClick={() => this.props.history.push('/')}>
 							Home
 						</div>
-						<div
-							className="headerOption"
-							onClick={() => this.props.history.push('./members/checkout')}
-						>
+						<div className="headerOption" onClick={() => this.props.history.push('/members')}>
 							Back
 						</div>
 						{user.admin ? (

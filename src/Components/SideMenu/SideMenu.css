@@ -19,7 +19,7 @@
 
 .visible {
 	animation-name: increaseWidth;
-	animation-duration: 1s;
+	animation-duration: 0.5s;
 	width: 225px;
 	display: block;
 }
@@ -35,7 +35,7 @@
 
 .hidden {
 	animation-name: decreaseWidth;
-	animation-duration: 1s;
+	animation-duration: 0.5s;
 	width: 0px;
 }
 
