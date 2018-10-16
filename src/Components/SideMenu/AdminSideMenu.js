@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { closeSideMenu } from '../../actions/overlays';
 import './SideMenu.css';
@@ -14,7 +15,9 @@ class AdminSideMenu extends Component {
 					<i className="headerArrow fa fa-arrow-right" onClick={() => closeSideMenu()} />
 					<div className="headerTitle">Manage</div>
 				</div>
-				<div className="sideMenuOption">Users</div>
+				<div className="sideMenuOption">
+					<Link to="/admin/users">Users</Link>
+				</div>
 				<div className="sideMenuOption">Inventory</div>
 				<div className="sideMenuOption">Items</div>
 				<div className="sideMenuOption">Images</div>

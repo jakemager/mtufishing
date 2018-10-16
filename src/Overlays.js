@@ -6,11 +6,11 @@ import AdminSideMenu from './Components/SideMenu/AdminSideMenu';
 
 class Overlays extends Component {
 	render() {
-		const { sidemenu } = this.props;
+		const { sidemenu, history } = this.props;
 		return (
 			<div>
-				<UserSideMenu visible={sidemenu === 'user'} />
-				<AdminSideMenu visible={sidemenu === 'admin'} />
+				<UserSideMenu history={history} visible={sidemenu === 'user'} />
+				<AdminSideMenu history={history} visible={sidemenu === 'admin'} />
 			</div>
 		);
 	}

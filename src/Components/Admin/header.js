@@ -22,7 +22,7 @@ class Header extends Component {
 		if (!this.props.user.userId) this.props.setUser();
 	}
 	render() {
-		const { checkout, user, removeFromCheckout, openSideMenu } = this.props;
+		const { openSideMenu } = this.props;
 
 		return (
 			<div>
@@ -32,39 +32,27 @@ class Header extends Component {
 						<div className="headerOption" onClick={() => this.props.history.push('/')}>
 							Home
 						</div>
-						<div
-							className="headerOption"
-							onClick={() => this.props.history.push('./members/checkout')}
-						>
-							Back
+						<div className="headerOption" onClick={() => this.props.history.push('/members')}>
+							Locker
 						</div>
-						<div
-							className="headerOption"
-							onClick={() => this.props.history.push('./members/checkout')}
-						>
+						<div className="headerOption" onClick={() => this.props.history.push('./admin/items')}>
 							Items
 						</div>
 						<div
 							className="headerOption"
-							onClick={() => this.props.history.push('./members/checkout')}
+							onClick={() => this.props.history.push('./admin/inventory')}
 						>
 							Inventory
 						</div>
-						<div
-							className="headerOption"
-							onClick={() => this.props.history.push('./members/checkout')}
-						>
+						<div className="headerOption" onClick={() => this.props.history.push('./admin/items')}>
 							Items
 						</div>
-						<div
-							className="headerOption"
-							onClick={() => this.props.history.push('./members/checkout')}
-						>
+						<div className="headerOption" onClick={() => this.props.history.push('./admin/users')}>
 							Users
 						</div>
 						<div
 							className="headerOption"
-							onClick={() => this.props.history.push('./members/checkout')}
+							onClick={() => this.props.history.push('./admin/sponsors')}
 						>
 							Sponsors
 						</div>
