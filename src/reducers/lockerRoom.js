@@ -22,7 +22,7 @@ export default function(state = initialState, action) {
 		case ADD_TO_CHECKOUT:
 			return {
 				...state,
-				checkout: [...state.checkout, action.item]
+				checkout: [...state.checkout, { ...action.item, quantity: 1 }]
 			};
 
 		case REMOVE_FROM_CHECKOUT:

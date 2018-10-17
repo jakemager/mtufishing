@@ -11,26 +11,21 @@
 	$sqlRemove = '';
 
 	foreach ($items as $item) {
-		var_dump($item);
+		// echo $item['quantity'];
 		for ($x = 0; $x < $item['quantity']; $x++) {
 			$sqlLog .= "INSERT INTO `LockerRoomLogs` (`ID`, `itemID`, `user`, `approver`, `dateCheckedOut`, `dateToReturn`, `dateReturned`, `returnedTo`)
 			VALUES(NULL, '" . $item['Id'] . "', '" . $_POST['studentId'] . "', NULL, '" . $_POST['checkoutDate'] . "', '" . $_POST['returnDate'] . "', NULL, NULL);\n";
-		} 
+
+			$sqlLog .= "UPDATE LockerRoomItems SET quantityAvailable = quantityAvailable - 1 WHERE ID = " . $item['Id'] . ";\n";
+
+		} 	
 	
 	}
 
-	// echo $sqlLog;
+	if (mysqli_multi_query($conn,$sqlLog)) {
+			echo json_encode(true);
 
-	// //insert into the locker room logs
-	// $sqlLog = "INSERT INTO `LockerRoomLogs` (`ID`, `itemID`, `user`, `approver`, `dateCheckedOut`, `dateToReturn`, `dateReturned`, `returnedTo`)
-	// VALUES(NULL, '" . $_POST['itemId'] . "', '" . $_POST['studentId'] . "', NULL, '" . $_POST['checkoutDate'] . "', '" . $_POST['returnDate'] . "', NULL, NULL)";
-
-	// //update quantity
-	// $sqlRemove = "UPDATE LockerRoomItems SET quantityAvailable = quantityAvailable - 1 WHERE ID = " . $_POST['itemId'] . ";";
-
-	// if ($conn->query($sqlLog) === TRUE && $conn->query($sqlRemove) === TRUE) {
-	// 	echo json_encode(true);
-	// } else echo json_encode($conn->error);
+	} else echo json_encode($conn->error);
 
 
 ?>

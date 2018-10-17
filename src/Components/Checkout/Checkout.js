@@ -28,49 +28,24 @@ class Checkout extends Component {
 	checkout = () => {
 		const { returnDate, today } = this.state;
 
-		// this.props.checkout.map(item => {
-		// 	let params = new URLSearchParams();
-		// 	params.append('itemId', item.Id);
-		// 	params.append('studentId', localStorage.getItem('mtuFishingUserId'));
-		// 	params.append('checkoutDate', today);
-		// 	params.append('returnDate', moment(returnDate).format('YYYY-MM-DD'));
-		// 	axios({
-		// 		method: 'post',
-		// 		url: 'http://localhost:8888/server/locker/checkout.php',
-		// 		data: params
-		// 	}).then(res => {
-		// 		if (res.data) {
-		// 			this.props.checkout.map(item => {
-		// 				this.props.removeFromCheckout(item.Id);
-		// 				this.setState({
-		// 					checkoutSuccess: true
-		// 				});
-		// 			});
-		// 		}
-		// 	});
-		// });
-
-		this.props.checkout.map(item => {
-			let params = new URLSearchParams();
-			params.append('items', JSON.stringify(this.props.checkout));
-			params.append('studentId', localStorage.getItem('mtuFishingUserId'));
-			params.append('checkoutDate', today);
-			params.append('returnDate', moment(returnDate).format('YYYY-MM-DD'));
-			axios({
-				method: 'post',
-				url: 'http://localhost:8888/server/locker/checkout.php',
-				data: params
-			}).then(res => {
-				if (res.data) {
-					// this.props.checkout.map(item => {
-					// 	this.props.removeFromCheckout(item.Id);
-					// 	this.setState({
-					// 		checkoutSuccess: true
-					// 	});
-					// });
-					console.log(res.data);
-				}
-			});
+		let params = new URLSearchParams();
+		params.append('items', JSON.stringify(this.props.checkout));
+		params.append('studentId', localStorage.getItem('mtuFishingUserId'));
+		params.append('checkoutDate', today);
+		params.append('returnDate', moment(returnDate).format('YYYY-MM-DD'));
+		axios({
+			method: 'post',
+			url: 'http://localhost:8888/server/locker/checkout.php',
+			data: params
+		}).then(res => {
+			if (res.data) {
+				this.props.checkout.map(item => {
+					this.props.removeFromCheckout(item.Id);
+					this.setState({
+						checkoutSuccess: true
+					});
+				});
+			}
 		});
 	};
 
