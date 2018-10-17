@@ -17,7 +17,7 @@ class FooterSection extends Component {
 		params.append('accessToken', user.accessToken);
 		axios({
 			method: 'post',
-			url: 'http://localhost:8888/server/signIn.php',
+			url: 'http://localhost:8888/server/login/signIn.php',
 			data: params
 		}).then(res => {
 			localStorage.setItem('mtuFishingAccessToken', user.accessToken);

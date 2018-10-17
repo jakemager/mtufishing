@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import { setUser } from '../../actions/user';
 import { openSideMenu } from '../../actions/overlays';
 import { addToCheckout, removeFromCheckout } from '../../actions/lockerRoom';
-
-// import './Checkout.css';
 
 class Header extends Component {
 	constructor(props) {
@@ -35,24 +32,24 @@ class Header extends Component {
 						<div className="headerOption" onClick={() => this.props.history.push('/members')}>
 							Locker
 						</div>
-						<div className="headerOption" onClick={() => this.props.history.push('./admin/items')}>
-							Items
-						</div>
 						<div
 							className="headerOption"
-							onClick={() => this.props.history.push('./admin/inventory')}
+							onClick={() => this.props.history.push('/admin/inventory')}
 						>
 							Inventory
 						</div>
-						<div className="headerOption" onClick={() => this.props.history.push('./admin/items')}>
+						<div className="headerOption" onClick={() => this.props.history.push('/admin/items')}>
 							Items
 						</div>
-						<div className="headerOption" onClick={() => this.props.history.push('./admin/users')}>
+						<div className="headerOption" onClick={() => this.props.history.push('/admin/users')}>
 							Users
+						</div>
+						<div className="headerOption" onClick={() => this.props.history.push('/admin/images')}>
+							Images
 						</div>
 						<div
 							className="headerOption"
-							onClick={() => this.props.history.push('./admin/sponsors')}
+							onClick={() => this.props.history.push('/admin/sponsors')}
 						>
 							Sponsors
 						</div>

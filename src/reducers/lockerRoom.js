@@ -1,4 +1,8 @@
-import { ADD_TO_CHECKOUT, REMOVE_FROM_CHECKOUT } from '../constants/actionTypes/lockerRoom';
+import {
+	ADD_TO_CHECKOUT,
+	REMOVE_FROM_CHECKOUT,
+	UPDATE_QUANTITY
+} from '../constants/actionTypes/lockerRoom';
 
 const initialState = {
 	checkout: [
@@ -25,6 +29,20 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				checkout: state.checkout.filter(checkoutItem => checkoutItem.Id !== action.itemId)
+			};
+
+		case UPDATE_QUANTITY:
+			return {
+				...state,
+				checkout: state.checkout.map(item => {
+					if (item.Id === action.itemId) {
+						return {
+							...item,
+							quantity: action.quantity
+						};
+					}
+					return item;
+				})
 			};
 
 		default:

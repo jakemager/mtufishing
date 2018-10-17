@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-export default class CheckoutItem extends Component {
+import { updateQuantity } from '../../actions/lockerRoom';
+
+class CheckoutItem extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -31,7 +34,7 @@ export default class CheckoutItem extends Component {
 	};
 
 	render() {
-		const { name, image, remove } = this.props;
+		const { Id, name, image, quantity, remove } = this.props;
 
 		return (
 			<div className="checkoutItemContainer">
@@ -47,10 +50,24 @@ export default class CheckoutItem extends Component {
 						</div>
 					</div>
 				</div>
-				<select className="selectBox" defaultValue={1}>
+				<select
+					className="selectBox"
+					defaultValue={1}
+					value={quantity}
+					onChange={e => this.props.updateQuantity(Id, e.target.value)}
+				>
 					{this.createSelectOptions()}
 				</select>
 			</div>
 		);
 	}
 }
+
+const mapStateToProps = state => ({});
+
+export default connect(
+	mapStateToProps,
+	{
+		updateQuantity
+	}
+)(CheckoutItem);

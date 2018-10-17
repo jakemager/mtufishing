@@ -3,7 +3,7 @@
 	header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 	header( "Content-type: application/json" );
 	
-	include_once "constants.php";
+	include_once "../constants.php";
 
 	// Get incoming payload
 	$accessToken = $_POST['accessToken'] ?? null;

@@ -59,7 +59,7 @@ class Login extends React.Component {
 		params.append('accessToken', localStorage.getItem('mtuFishingAccessToken'));
 		axios({
 			method: 'post',
-			url: 'http://localhost:8888/server/verifyToken.php',
+			url: 'http://localhost:8888/server/login/verifyToken.php',
 			data: params
 		}).then(() => {
 			auth.authenticate(() => {
@@ -82,7 +82,7 @@ class Login extends React.Component {
 		params.append('accessToken', user.accessToken);
 		axios({
 			method: 'post',
-			url: 'http://localhost:8888/server/signIn.php',
+			url: 'http://localhost:8888/server/login/signIn.php',
 			data: params
 		}).then(res => {
 			localStorage.setItem('mtuFishingAccessToken', user.accessToken);

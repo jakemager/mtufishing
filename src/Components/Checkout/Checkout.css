@@ -139,3 +139,14 @@ button:hover {
 	color: #fff;
 	cursor: pointer;
 }
+
+.backLink {
+	text-decoration: underline;
+}
+
+.backLink:hover {
+	margin: 0;
+	padding: 0;
+	cursor: pointer;
+	color: #f59f27;
+}

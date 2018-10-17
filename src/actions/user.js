@@ -7,7 +7,7 @@ export const setUser = () => dispatch => {
 	params.append('userId', localStorage.getItem('mtuFishingUserId'));
 	axios({
 		method: 'post',
-		url: 'http://localhost:8888/server/getUser.php',
+		url: 'http://localhost:8888/server/login/getUser.php',
 		data: params
 	}).then(res => {
 		if (res.data) {

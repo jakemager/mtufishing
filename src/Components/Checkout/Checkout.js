@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import moment from 'moment';
 
 import { setUser } from '../../actions/user';
 import { openSideMenu } from '../../actions/overlays';
@@ -14,8 +15,9 @@ class Checkout extends Component {
 		super(props);
 
 		this.state = {
-			today: new Date(),
-			returnDate: ''
+			today: moment().format('YYYY-MM-DD'),
+			returnDate: '',
+			checkoutSuccess: false
 		};
 	}
 
@@ -23,71 +25,151 @@ class Checkout extends Component {
 		if (!this.props.user.userId) this.props.setUser();
 	}
 
-	render() {
-		const { checkout, user, removeFromCheckout, openSideMenu } = this.props;
-		const { today, returnDate } = this.state;
+	checkout = () => {
+		const { returnDate, today } = this.state;
+
+		// this.props.checkout.map(item => {
+		// 	let params = new URLSearchParams();
+		// 	params.append('itemId', item.Id);
+		// 	params.append('studentId', localStorage.getItem('mtuFishingUserId'));
+		// 	params.append('checkoutDate', today);
+		// 	params.append('returnDate', moment(returnDate).format('YYYY-MM-DD'));
+		// 	axios({
+		// 		method: 'post',
+		// 		url: 'http://localhost:8888/server/locker/checkout.php',
+		// 		data: params
+		// 	}).then(res => {
+		// 		if (res.data) {
+		// 			this.props.checkout.map(item => {
+		// 				this.props.removeFromCheckout(item.Id);
+		// 				this.setState({
+		// 					checkoutSuccess: true
+		// 				});
+		// 			});
+		// 		}
+		// 	});
+		// });
+
+		this.props.checkout.map(item => {
+			let params = new URLSearchParams();
+			params.append('items', JSON.stringify(this.props.checkout));
+			params.append('studentId', localStorage.getItem('mtuFishingUserId'));
+			params.append('checkoutDate', today);
+			params.append('returnDate', moment(returnDate).format('YYYY-MM-DD'));
+			axios({
+				method: 'post',
+				url: 'http://localhost:8888/server/locker/checkout.php',
+				data: params
+			}).then(res => {
+				if (res.data) {
+					// this.props.checkout.map(item => {
+					// 	this.props.removeFromCheckout(item.Id);
+					// 	this.setState({
+					// 		checkoutSuccess: true
+					// 	});
+					// });
+					console.log(res.data);
+				}
+			});
+		});
+	};
+
+	header = () => {
+		const { user, openSideMenu } = this.props;
+
 		return (
-			<div>
-				<div className="header">
-					<div className="headerTitle">MTU Fishing Club Locker</div>
-					<div className="headerMenu">
-						<div className="headerOption" onClick={() => this.props.history.push('/')}>
-							Home
+			<div className="header">
+				<div className="headerTitle">MTU Fishing Club Locker</div>
+				<div className="headerMenu">
+					<div className="headerOption" onClick={() => this.props.history.push('/')}>
+						Home
+					</div>
+					<div className="headerOption" onClick={() => this.props.history.push('/members')}>
+						Back
+					</div>
+					{user.admin ? (
+						<div className="headerOption" onClick={() => openSideMenu('admin')}>
+							<i className="fa fa-cog" />
 						</div>
-						<div className="headerOption" onClick={() => this.props.history.push('/members')}>
-							Back
-						</div>
-						{user.admin ? (
-							<div className="headerOption" onClick={() => openSideMenu('admin')}>
-								<i className="fa fa-cog" />
-							</div>
-						) : (
-							<div />
-						)}
-						<div className="headerOption" onClick={() => openSideMenu('user')}>
-							<i className="fa fa-user" />
-						</div>
+					) : (
+						<div />
+					)}
+					<div className="headerOption" onClick={() => openSideMenu('user')}>
+						<i className="fa fa-user" />
 					</div>
 				</div>
+			</div>
+		);
+	};
+
+	render() {
+		const { checkout, removeFromCheckout } = this.props;
+		const { today, returnDate, checkoutSuccess } = this.state;
+
+		if (checkoutSuccess)
+			return (
+				<div>
+					{this.header()}
+					<p>
+						Checkout successful. The equipment manager has been emailed and should contact you
+						shortly.
+					</p>
+					<p className="backLink" onClick={() => this.props.history.push('/members')}>
+						Go Back
+					</p>
+				</div>
+			);
+
+		return (
+			<div>
+				{this.header()}
 				<div className="cartContainer">
 					<div className="cart">
 						<h3>Locker Checkout</h3>
 
-						{checkout.map(item => {
-							const { Id, name, image, quantityAvailable } = item;
-							return (
-								<CheckoutItem
-									remove={() => removeFromCheckout(Id)}
-									name={name}
-									image={image}
-									quantityAvailable={quantityAvailable}
-								/>
-							);
-						})}
+						{checkout.length ? (
+							<div>
+								{checkout.map((item, i) => {
+									const { Id, name, image, quantityAvailable } = item;
+									return (
+										<CheckoutItem
+											key={i}
+											Id={Id}
+											remove={() => removeFromCheckout(Id)}
+											name={name}
+											image={image}
+											quantityAvailable={quantityAvailable}
+										/>
+									);
+								})}
 
-						<div className="checkoutForm">
-							<div className="dateForms">
-								<div>
-									Checkout Date:
-									<input
-										className="datePicker"
-										type="date"
-										disabled
-										value={today.toJSON().slice(0, 10)}
-									/>
-								</div>
-								<div style={{ marginLeft: 15 }}>
-									Return Date:
-									<input
-										className="datePicker"
-										type="date"
-										value={returnDate}
-										onChange={e => this.setState({ returnDate: e.target.value })}
-									/>
+								<div className="checkoutForm">
+									<div className="dateForms">
+										<div>
+											Checkout Date:
+											<input className="datePicker" type="date" disabled value={today} />
+										</div>
+										<div style={{ marginLeft: 15 }}>
+											Return Date:
+											<input
+												className="datePicker"
+												type="date"
+												value={returnDate}
+												onChange={e => this.setState({ returnDate: e.target.value })}
+											/>
+										</div>
+									</div>
+									<button onClick={() => this.checkout()}>Checkout</button>
 								</div>
 							</div>
-							<button>Checkout</button>
-						</div>
+						) : (
+							<div>
+								<p>You haven't added any items to the cart yet!</p>
+								<p className="backLink" onClick={() => this.props.history.push('/members')}>
+									Go Back
+								</p>
+							</div>
+						)}
 					</div>
 				</div>
 			</div>

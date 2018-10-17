@@ -9,3 +9,9 @@ export const removeFromCheckout = itemId => ({
 	type: types.REMOVE_FROM_CHECKOUT,
 	itemId
 });
+
+export const updateQuantity = (itemId, quantity) => ({
+	type: types.UPDATE_QUANTITY,
+	itemId,
+	quantity
+});
