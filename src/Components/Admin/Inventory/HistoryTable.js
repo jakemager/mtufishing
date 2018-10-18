@@ -4,10 +4,6 @@ import axios from 'axios';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 
-import PendingTable from './PendingTable';
-import CheckedOutTable from './CheckedOutTable';
-import HistoryTable from './HistoryTable';
-
 import './Inventory.css';
 
 export default class Inventory extends Component {
@@ -23,7 +19,7 @@ export default class Inventory extends Component {
 	}
 
 	componentDidMount() {
-		this.getLogs();
+		this.setState({ logs: this.props.logs.filter(log => !!log.dateReturned) });
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -49,36 +45,39 @@ export default class Inventory extends Component {
 		});
 	};
 
+	getActions = ({ dateReturned }) => {
+		return 'Approve, Delete';
+	};
+
+	getColumns = () => [
+		{
+			Header: 'Item',
+			accessor: 'itemName'
+		},
+		{
+			Header: 'User',
+			accessor: 'user'
+		},
+		{
+			Header: 'Checkout Date',
+			accessor: 'checkoutDate'
+		},
+		{
+			Header: 'Return Date',
+			accessor: 'returnDate'
+		}
+	];
+
 	render() {
-		const { loading, logs, tab } = this.state;
-		if (loading) return <div>Loading</div>;
+		const { logs } = this.state;
 		return (
-			<div>
-				<Header history={this.props.history} />
-				<div className="tab">
-					<button
-						className={`tabLinks ${tab === 'pending' && 'active'}`}
-						onClick={() => this.setState({ tab: 'pending' })}
-					>
-						Pending
-					</button>
-					<button
-						className={`tabLinks ${tab === 'checkedOut' && 'active'}`}
-						onClick={() => this.setState({ tab: 'checkedOut' })}
-					>
-						Checked Out
-					</button>
-					<button
-						className={`tabLinks ${tab === 'history' && 'active'}`}
-						onClick={() => this.setState({ tab: 'history' })}
-					>
-						History
-					</button>
-				</div>
-				{tab === 'pending' && <PendingTable logs={logs} />}
-				{tab === 'checkedOut' && <CheckedOutTable logs={logs} />}
-				{tab === 'history' && <HistoryTable logs={logs} />}
-			</div>
+			<ReactTable
+				defaultPageSize={10}
+				style={{ textAlign: 'center' }}
+				className="-striped"
+				data={logs}
+				columns={this.getColumns()}
+			/>
 		);
 	}
 }
