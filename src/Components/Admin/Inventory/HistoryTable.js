@@ -54,12 +54,24 @@ export default class Inventory extends Component {
 			accessor: 'user'
 		},
 		{
+			Header: 'Approver',
+			accessor: 'approver'
+		},
+		{
 			Header: 'Checkout Date',
 			accessor: 'checkoutDate'
 		},
 		{
+			Header: 'Return Date',
+			accessor: 'returnDate'
+		},
+		{
 			Header: 'Date Returned',
 			accessor: 'dateReturned'
+		},
+		{
+			Header: 'Returned To',
+			accessor: 'returnedTo'
 		}
 	];
 
