@@ -8,7 +8,7 @@
 	$logs = array();
 
 	// Find user in DB
-	$getLogs = "SELECT A.ID AS logID, approver, B.ID AS itemID, dateToReturn, dateCheckedOut, user, name
+	$getLogs = "SELECT A.ID AS logID, approver, returnedTo, dateReturned, dateCheckedOut,dateToReturn, B.ID AS itemID, user, name
 					FROM LockerRoomLogs A
 					JOIN LockerRoomItems B ON A.itemID = B.ID
 					ORDER BY A.dateCheckedOut ASC";

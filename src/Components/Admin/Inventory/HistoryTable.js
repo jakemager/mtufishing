@@ -44,10 +44,6 @@ export default class Inventory extends Component {
 		});
 	};
 
-	getActions = ({ dateReturned }) => {
-		return 'Approve, Delete';
-	};
-
 	getColumns = () => [
 		{
 			Header: 'Item',
@@ -62,8 +58,8 @@ export default class Inventory extends Component {
 			accessor: 'checkoutDate'
 		},
 		{
-			Header: 'Return Date',
-			accessor: 'returnDate'
+			Header: 'Date Returned',
+			accessor: 'dateReturned'
 		}
 	];
 

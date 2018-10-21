@@ -19,12 +19,19 @@ export default class Inventory extends Component {
 	}
 
 	componentDidMount() {
-		this.setState({ logs: this.props.logs.filter(log => !!!log.dateReturned && !!log.approver) });
+		this.setState({ logs: this.props.logs.filter(log => !!!log.returnedTo && !!log.approver) });
 	}
 
 	componentDidUpdate(prevProps, prevState) {
 		const { filter } = this.props;
 		const { logs } = this.state;
+
+		// If logs updates
+		if (this.props.logs !== prevProps.logs) {
+			this.setState({
+				logs: this.props.logs.filter(log => !!!log.returnedTo && !!log.approver)
+			});
+		}
 
 		// If user does search
 		if (filter !== prevProps.filter) {
@@ -36,8 +43,37 @@ export default class Inventory extends Component {
 		}
 	}
 
-	getActions = ({ dateReturned }) => {
-		return 'Return';
+	returnItem = (Id, itemId) => {
+		let params = new URLSearchParams();
+		params.append('logId', Id);
+		params.append('itemId', itemId);
+		params.append('user', localStorage.getItem('mtuFishingUserId'));
+		axios({
+			method: 'post',
+			url: 'http://localhost:8888/server/inventory/returnItem.php',
+			data: params
+		}).then(res => {
+			if (res.data === true) {
+				toast.success('Item returned!', {
+					position: 'bottom-right',
+					autoClose: 2000,
+					closeOnClick: true
+				});
+
+				this.props.getLogs();
+			}
+			console.log(res);
+		});
+	};
+
+	getActions = ({ Id, itemId }) => {
+		return (
+			<div className="actionButtons">
+				<button onClick={() => this.returnItem(Id, itemId)} className="approveButton">
+					Return
+				</button>
+			</div>
+		);
 	};
 
 	getColumns = () => [
@@ -59,21 +95,24 @@ export default class Inventory extends Component {
 		},
 		{
 			Header: 'Actions',
-			Cell: props => <span className="number">{this.getActions(props)}</span>
+			Cell: props => <span className="number">{this.getActions(props.original)}</span>
 		}
 	];
 
 	render() {
 		const { logs } = this.state;
 		return (
-			<ReactTable
-				defaultPageSize={10}
-				style={{ textAlign: 'center' }}
-				className="-striped"
-				noDataText="No Checked Out Items!"
-				data={logs}
-				columns={this.getColumns()}
-			/>
+			<div>
+				<ReactTable
+					defaultPageSize={10}
+					style={{ textAlign: 'center' }}
+					className="-striped"
+					noDataText="No Checked Out Items!"
+					data={logs}
+					columns={this.getColumns()}
+				/>
+				<ToastContainer />
+			</div>
 		);
 	}
 }
