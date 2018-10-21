@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Header from '../Header';
 import axios from 'axios';
 import ReactTable from 'react-table';
-import 'react-table/react-table.css';
 
 import './Inventory.css';
 

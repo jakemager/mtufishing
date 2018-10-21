@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Header from '../Header';
 import axios from 'axios';
 import ReactTable from 'react-table';
-import 'react-table/react-table.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import './Inventory.css';
 
@@ -26,6 +26,13 @@ export default class Inventory extends Component {
 		const { filter } = this.props;
 		const { logs } = this.state;
 
+		// If logs updates
+		if (this.props.logs !== prevProps.logs) {
+			this.setState({
+				logs: this.props.logs.filter(log => !!!log.dateReturned && !!!log.approver)
+			});
+		}
+
 		// If user does search
 		if (filter !== prevProps.filter) {
 			let filteredLogs = [...logs];
@@ -45,21 +52,49 @@ export default class Inventory extends Component {
 			url: 'http://localhost:8888/server/inventory/approveItem.php',
 			data: params
 		}).then(res => {
-			if (res.data) {
-				console.log(res.data);
-			}
+			if (res.data === true) {
+				toast.success('Item approved!', {
+					position: 'bottom-right',
+					autoClose: 2000,
+					closeOnClick: true
+				});
 
+				this.props.getLogs();
+			}
+		});
+	};
+
+	deleteItem = (Id, itemId) => {
+		let params = new URLSearchParams();
+		params.append('logId', Id);
+		params.append('itemId', itemId);
+		axios({
+			method: 'post',
+			url: 'http://localhost:8888/server/inventory/deleteItem.php',
+			data: params
+		}).then(res => {
+			if (res.data === true) {
+				toast.error('Item removed', {
+					position: 'bottom-right',
+					autoClose: 2000,
+					closeOnClick: true
+				});
+
+				this.props.getLogs();
+			}
 			console.log(res);
 		});
 	};
 
-	getActions = ({ Id }) => {
+	getActions = ({ Id, itemId }) => {
 		return (
 			<div className="actionButtons">
 				<button onClick={() => this.approveItem(Id)} className="approveButton">
 					Approve
 				</button>
-				<button className="deleteButton">Delete</button>
+				<button onClick={() => this.deleteItem(Id, itemId)} className="deleteButton">
+					Delete
+				</button>
 			</div>
 		);
 	};
@@ -90,14 +125,17 @@ export default class Inventory extends Component {
 	render() {
 		const { logs } = this.state;
 		return (
-			<ReactTable
-				defaultPageSize={10}
-				style={{ textAlign: 'center' }}
-				className="-striped"
-				noDataText="No Pending Items!"
-				data={logs}
-				columns={this.getColumns()}
-			/>
+			<div>
+				<ReactTable
+					defaultPageSize={10}
+					style={{ textAlign: 'center' }}
+					className="-striped"
+					noDataText="No Pending Items!"
+					data={logs}
+					columns={this.getColumns()}
+				/>
+				<ToastContainer />
+			</div>
 		);
 	}
 }

@@ -75,7 +75,7 @@ export default class Inventory extends Component {
 						History
 					</button>
 				</div>
-				{tab === 'pending' && <PendingTable logs={logs} />}
+				{tab === 'pending' && <PendingTable logs={logs} getLogs={this.getLogs} />}
 				{tab === 'checkedOut' && <CheckedOutTable logs={logs} />}
 				{tab === 'history' && <HistoryTable logs={logs} />}
 			</div>

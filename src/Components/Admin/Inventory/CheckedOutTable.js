@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from '../Header';
 import axios from 'axios';
 import ReactTable from 'react-table';
-import 'react-table/react-table.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 import './Inventory.css';
 
@@ -35,15 +35,6 @@ export default class Inventory extends Component {
 			this.setState({ filteredLogs });
 		}
 	}
-
-	getLogs = () => {
-		axios({
-			method: 'post',
-			url: 'http://localhost:8888/server/inventory/getLogs.php'
-		}).then(res => {
-			this.setState({ logs: res.data, filteredLogs: res.data, loading: false });
-		});
-	};
 
 	getActions = ({ dateReturned }) => {
 		return 'Return';

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import '../node_modules/font-awesome/css/font-awesome.min.css';
+
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import axios from 'axios';
@@ -8,6 +9,8 @@ import axios from 'axios';
 import store from './store';
 import Routes from './Routes';
 
+import 'react-toastify/dist/ReactToastify.css';
+import 'react-table/react-table.css';
 import './App.css';
 
 const history = createBrowserHistory();
