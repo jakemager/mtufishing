@@ -22,46 +22,37 @@ class Header extends Component {
 		const { openSideMenu } = this.props;
 
 		return (
-			<div>
-				<div className="header">
-					<div className="headerTitle">MTU Fishing Club Locker</div>
-					<div className="headerMenu">
-						<div className="headerOption" onClick={() => this.props.history.push('/')}>
-							Home
-						</div>
-						<div className="headerOption" onClick={() => this.props.history.push('/members')}>
-							Locker
-						</div>
-						<div
-							className="headerOption"
-							onClick={() => this.props.history.push('/admin/inventory')}
-						>
-							Inventory
-						</div>
-						<div className="headerOption" onClick={() => this.props.history.push('/admin/items')}>
-							Items
-						</div>
-						<div className="headerOption" onClick={() => this.props.history.push('/admin/users')}>
-							Users
-						</div>
-						<div className="headerOption" onClick={() => this.props.history.push('/admin/images')}>
-							Images
-						</div>
-						<div
-							className="headerOption"
-							onClick={() => this.props.history.push('/admin/sponsors')}
-						>
-							Sponsors
-						</div>
-						<div className="headerOption" onClick={() => openSideMenu('admin')}>
-							<i className="fa fa-cog" />
-						</div>
-						<div className="headerOption" onClick={() => openSideMenu('user')}>
-							<i className="fa fa-user" />
-						</div>
+			<div className="header">
+				<div className="headerTitle">MTU Fishing Club Locker</div>
+				<div className="headerMenu">
+					<div className="headerOption" onClick={() => this.props.history.push('/')}>
+						Home
+					</div>
+					<div className="headerOption" onClick={() => this.props.history.push('/members')}>
+						Locker
+					</div>
+					<div className="headerOption" onClick={() => this.props.history.push('/admin/inventory')}>
+						Inventory
+					</div>
+					<div className="headerOption" onClick={() => this.props.history.push('/admin/items')}>
+						Items
+					</div>
+					<div className="headerOption" onClick={() => this.props.history.push('/admin/users')}>
+						Users
+					</div>
+					<div className="headerOption" onClick={() => this.props.history.push('/admin/images')}>
+						Images
+					</div>
+					<div className="headerOption" onClick={() => this.props.history.push('/admin/sponsors')}>
+						Sponsors
+					</div>
+					<div className="headerOption" onClick={() => openSideMenu('admin')}>
+						<i className="fa fa-cog" />
+					</div>
+					<div className="headerOption" onClick={() => openSideMenu('user')}>
+						<i className="fa fa-user" />
 					</div>
 				</div>
-				<div className="cartContainer" />
 			</div>
 		);
 	}

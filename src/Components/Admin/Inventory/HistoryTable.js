@@ -81,7 +81,7 @@ export default class Inventory extends Component {
 			<ReactTable
 				defaultPageSize={10}
 				style={{ textAlign: 'center' }}
-				className="-striped"
+				className="-highlight"
 				data={logs}
 				columns={this.getColumns()}
 			/>

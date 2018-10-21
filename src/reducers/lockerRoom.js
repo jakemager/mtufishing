@@ -5,16 +5,7 @@ import {
 } from '../constants/actionTypes/lockerRoom';
 
 const initialState = {
-	checkout: [
-		{
-			Id: '4',
-			name: '5ft Ultra Light Rod',
-			quantity: '1',
-			quantityAvailable: '2',
-			description: null,
-			image: 'no-img.jpg'
-		}
-	]
+	checkout: []
 };
 
 export default function(state = initialState, action) {

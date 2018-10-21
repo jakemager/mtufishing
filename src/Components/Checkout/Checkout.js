@@ -16,7 +16,9 @@ class Checkout extends Component {
 
 		this.state = {
 			today: moment().format('YYYY-MM-DD'),
-			returnDate: '',
+			returnDate: moment()
+				.add('1', 'week')
+				.format('YYYY-MM-DD'),
 			checkoutSuccess: false
 		};
 	}
