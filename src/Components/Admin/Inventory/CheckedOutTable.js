@@ -104,7 +104,7 @@ export default class Inventory extends Component {
 		return (
 			<div>
 				<ReactTable
-					defaultPageSize={10}
+					defaultPageSize={12}
 					style={{ textAlign: 'center' }}
 					className="-striped"
 					noDataText="No Checked Out Items!"

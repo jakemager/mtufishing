@@ -78,7 +78,7 @@ export default class Inventory extends Component {
 		const { logs } = this.state;
 		return (
 			<ReactTable
-				defaultPageSize={10}
+				defaultPageSize={12}
 				style={{ textAlign: 'center' }}
 				className="-highlight"
 				data={logs}
