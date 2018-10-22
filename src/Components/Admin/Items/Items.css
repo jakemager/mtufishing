@@ -1,0 +1,7 @@
+.editButton {
+	background-color: #4492ca;
+	color: #fff;
+}
+.editButton:hover {
+	background-color: #32709d;
+}

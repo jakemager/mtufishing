@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Header from '../Header';
 import axios from 'axios';
 import ReactTable from 'react-table';
 

@@ -10,3 +10,33 @@ export default class Users extends Component {
 		);
 	}
 }
+
+// getColumns = () => [
+// 	{
+// 		Header: 'ID',
+// 		accessor: 'Id'
+// 	},
+// 	{
+// 		Header: 'Name',
+// 		accessor: 'name'
+// 	},
+// 	{
+// 		Header: 'Position',
+// 		accessor: 'position'
+// 	},
+// 	{
+// 		Header: 'Paid',
+// 		accessor: 'paid'
+// 	},
+// 	{
+// 		Header: 'Admin',
+// 		accessor: 'admin'
+// 	},
+// 	{
+// 		Header: 'Boat',
+// 		accessor: 'boat'
+// 	},
+// 	{
+// 		Header: 'Actions'
+// 	}
+// ];
