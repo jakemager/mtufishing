@@ -26,7 +26,7 @@ class Users extends Component {
 	getUsers = () => {
 		axios({
 			method: 'post',
-			url: 'http://localhost:8888/server/users/getUsers.php'
+			url: '/server/users/getUsers.php'
 		}).then(res => {
 			this.setState({ users: res.data, filteredusers: res.data });
 		});

@@ -37,7 +37,7 @@ class Checkout extends Component {
 		params.append('returnDate', moment(returnDate).format('YYYY-MM-DD'));
 		axios({
 			method: 'post',
-			url: 'http://localhost:8888/server/locker/checkout.php',
+			url: '/server/locker/checkout.php',
 			data: params
 		}).then(res => {
 			if (res.data) {

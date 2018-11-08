@@ -49,7 +49,7 @@ export default class Inventory extends Component {
 		params.append('user', localStorage.getItem('mtuFishingUserId'));
 		axios({
 			method: 'post',
-			url: 'http://localhost:8888/server/inventory/approveItem.php',
+			url: '/server/inventory/approveItem.php',
 			data: params
 		}).then(res => {
 			if (res.data === true) {
@@ -70,7 +70,7 @@ export default class Inventory extends Component {
 		params.append('itemId', itemId);
 		axios({
 			method: 'post',
-			url: 'http://localhost:8888/server/inventory/deleteItem.php',
+			url: '/server/inventory/deleteItem.php',
 			data: params
 		}).then(res => {
 			if (res.data === true) {

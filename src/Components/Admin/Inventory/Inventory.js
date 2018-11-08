@@ -42,7 +42,7 @@ class Inventory extends Component {
 	getLogs = () => {
 		axios({
 			method: 'post',
-			url: 'http://localhost:8888/server/inventory/getLogs.php'
+			url: '/server/inventory/getLogs.php'
 		}).then(res => {
 			this.setState({ logs: res.data, filteredLogs: res.data });
 		});

@@ -44,7 +44,7 @@ class Locker extends Component {
 	getItems = () => {
 		axios({
 			method: 'post',
-			url: 'http://localhost:8888/server/locker/getItems.php'
+			url: '/server/locker/getItems.php'
 		}).then(res => {
 			this.setState({ items: res.data, filteredItems: res.data, loading: false });
 		});
