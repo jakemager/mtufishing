@@ -4,6 +4,9 @@
 ## Welcome to the repository for The Fishing Club at Michigan Tech Website
 This is an open repository for anyone that would like execute their skills on a real world product that is used by many students. 
 
+[mtufishing.club](http://mtufishing.club) **or**
+
+[mtufishing.com](http://mtufishing.com) 
 
 ### Contributing
 - Feel free to tackle any issues and make a pull request when completed and tested
