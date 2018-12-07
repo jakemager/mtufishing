@@ -16,7 +16,7 @@
 			$sqlLog .= "INSERT INTO `LockerRoomLogs` (`ID`, `itemID`, `user`, `approver`, `dateCheckedOut`, `dateToReturn`, `dateReturned`, `returnedTo`)
 			VALUES(NULL, '" . $item['Id'] . "', '" . $_POST['studentId'] . "', NULL, '" . $_POST['checkoutDate'] . "', '" . $_POST['returnDate'] . "', NULL, NULL);\n";
 
-			$sqlLog .= "UPDATE LockerRoomItems SET quantityAvailable = quantityAvailable - 1 WHERE ID = " . $item['Id'] . ";\n";
+			// $sqlLog .= "UPDATE LockerRoomItems SET quantityAvailable = quantityAvailable - 1 WHERE ID = " . $item['Id'] . ";\n";
 
 		} 	
 	
