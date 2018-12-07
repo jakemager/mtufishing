@@ -10,8 +10,4 @@
 		die("<br /><b>Connection failed!!! Please email jmager@mtu.edu</b> <br /> " . $conn->connect_error);
 	}
 	mysqli_select_db($conn,"mtuFishingClub");
-
-	// $SERVER_NAME = "jakemager.com";
-	// $SERVER_USERNAME = "jakemager";
-	// $SERVER_PASSWORD = "4ducksUn71m1t3d12";
 ?>
