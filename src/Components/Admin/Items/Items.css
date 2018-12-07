@@ -5,3 +5,41 @@
 .editButton:hover {
 	background-color: #32709d;
 }
+
+.addEditItemContainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	flex-wrap: wrap;
+}
+
+.addEditItemColumn {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	width: 200px;
+	margin: 5px;
+	justify-content: center;
+	align-items: center;
+}
+
+label {
+	font-size: 16px;
+	font-weight: 600;
+	padding-bottom: 5px;
+}
+
+.btn {
+	width: 100px;
+	height: 35px;
+}
+
+.textInput {
+	border-radius: 3px;
+	border: 1px solid #cccccc;
+	padding: 5px;
+	font-size: 15px;
+	min-height: 18px;
+	min-width: 100%;
+	max-width: 100%;
+}

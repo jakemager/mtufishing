@@ -5,6 +5,7 @@ import axios from 'axios';
 import ReactTable from 'react-table';
 
 import './Items.css';
+import AddEditItem from './AddEditItem';
 
 class Items extends Component {
 	constructor(props) {
@@ -13,7 +14,9 @@ class Items extends Component {
 		this.state = {
 			tab: 'pending',
 			items: [],
-			filteredItems: []
+			editingItem: false,
+			filteredItems: [],
+			editItem: { image: '', name: '', quantity: '', description: '' }
 		};
 	}
 
@@ -32,10 +35,18 @@ class Items extends Component {
 		});
 	};
 
-	getActions = ({ Id }) => {
+	getActions = ({ Id, image, name, quantity, description }) => {
 		return (
 			<div className="actionButtons">
-				<button onClick={() => this.editItem(Id)} className="editButton">
+				<button
+					onClick={() =>
+						this.setState({
+							editItem: { id: Id, image, name, quantity, description },
+							editingItem: true
+						})
+					}
+					className="editButton"
+				>
 					Edit
 				</button>
 				<button onClick={() => this.deleteItem(Id)} className="deleteButton">
@@ -85,8 +96,15 @@ class Items extends Component {
 		}
 	];
 
+	cancelEdit = () => {
+		this.setState({
+			editItem: { image: '', name: '', quantity: '', description: '' },
+			editingItem: false
+		});
+	};
+
 	render() {
-		const { filteredItems } = this.state;
+		const { filteredItems, editItem, editingItem } = this.state;
 
 		if (!this.props.user.admin) {
 			this.props.history.push('/');
@@ -95,19 +113,27 @@ class Items extends Component {
 				<div>
 					<Header history={this.props.history} />
 					<div style={{ padding: 10 }}>
-						<input
-							style={{ height: 34, width: 300, fontSize: 18 }}
-							placeholder="Filter Items..."
-							type="text"
-							onChange={e => this.setState({ filterBarValue: e.target.value }, this.filterItems)}
-						/>
-						<button
-							style={{ float: 'right' }}
-							onClick={() => this.addItem()}
-							className="editButton"
-						>
-							New Item
-						</button>
+						{editingItem ? (
+							<AddEditItem editItem={editItem} cancel={this.cancelEdit} />
+						) : (
+							<div>
+								<input
+									style={{ height: 34, width: 300, fontSize: 18 }}
+									placeholder="Filter Items..."
+									type="text"
+									onChange={e =>
+										this.setState({ filterBarValue: e.target.value }, this.filterItems)
+									}
+								/>
+								<button
+									style={{ float: 'right' }}
+									onClick={() => this.setState({ editingItem: true })}
+									className="editButton"
+								>
+									New Item
+								</button>
+							</div>
+						)}
 					</div>
 					<ReactTable
 						defaultPageSize={10}
