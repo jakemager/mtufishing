@@ -45,6 +45,23 @@ class Items extends Component {
 		);
 	};
 
+	filterItems = () => {
+		const { filterBarValue, items } = this.state;
+		let filteredItems = [];
+		if (filterBarValue.length > 0) {
+			filteredItems = this.state.filteredItems.filter(
+				item =>
+					(!!item.name && item.name.toLowerCase().includes(filterBarValue.toLowerCase())) ||
+					(!!item.description &&
+						item.description.toLowerCase().includes(filterBarValue.toLowerCase()))
+			);
+		} else {
+			filteredItems = [...items];
+		}
+
+		this.setState({ filteredItems });
+	};
+
 	getColumns = () => [
 		{
 			Header: 'Image',
@@ -69,7 +86,7 @@ class Items extends Component {
 	];
 
 	render() {
-		const { items } = this.state;
+		const { filteredItems } = this.state;
 
 		if (!this.props.user.admin) {
 			this.props.history.push('/');
@@ -82,6 +99,7 @@ class Items extends Component {
 							style={{ height: 34, width: 300, fontSize: 18 }}
 							placeholder="Filter Items..."
 							type="text"
+							onChange={e => this.setState({ filterBarValue: e.target.value }, this.filterItems)}
 						/>
 						<button
 							style={{ float: 'right' }}
@@ -95,7 +113,7 @@ class Items extends Component {
 						defaultPageSize={10}
 						style={{ textAlign: 'center' }}
 						className="-highlight"
-						data={items}
+						data={filteredItems}
 						columns={this.getColumns()}
 					/>
 				</div>
