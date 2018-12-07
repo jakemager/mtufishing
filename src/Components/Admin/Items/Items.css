@@ -23,7 +23,7 @@
 	align-items: center;
 }
 
-label {
+.addEditItemHeader {
 	font-size: 16px;
 	font-weight: 600;
 	padding-bottom: 5px;
@@ -42,4 +42,8 @@ label {
 	min-height: 18px;
 	min-width: 100%;
 	max-width: 100%;
+}
+
+div.rt-tr {
+	align-items: center;
 }

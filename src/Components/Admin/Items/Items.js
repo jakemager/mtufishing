@@ -46,6 +46,7 @@ class Items extends Component {
 						})
 					}
 					className="editButton"
+					style={{ marginRight: 5 }}
 				>
 					Edit
 				</button>
@@ -76,7 +77,10 @@ class Items extends Component {
 	getColumns = () => [
 		{
 			Header: 'Image',
-			accessor: 'image'
+			accessor: 'image',
+			Cell: props => (
+				<img style={{ width: 75, height: 75, objectFit: 'contain' }} src={`/${props.value}`} />
+			)
 		},
 		{
 			Header: 'Name',

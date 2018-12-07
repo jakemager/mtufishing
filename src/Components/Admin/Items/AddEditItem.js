@@ -30,13 +30,29 @@ export default class AddEditItem extends Component {
 		return (
 			<div className="addEditItemContainer">
 				<div className="addEditItemColumn">
-					<label>Image</label>
-					<button onClick={() => this.addItem()} className="btn editButton">
+					<label className="addEditItemHeader">Image</label>
+					<img src={`${image}`} style={{ width: 75, height: 75, objectFit: 'contain' }} />
+					<input
+						type="file"
+						accept="image/*"
+						onChange={e =>
+							this.setState({
+								newItem: { ...newItem, image: URL.createObjectURL(e.target.files[0]) }
+							})
+						}
+						id="file-upload"
+						style={{ display: 'none' }}
+					/>
+					<label
+						htmlFor="file-upload"
+						className="btn editButton"
+						style={{ height: 25, marginTop: 5, paddingTop: 5, borderRadius: 3 }}
+					>
 						Upload
-					</button>
+					</label>
 				</div>
 				<div className="addEditItemColumn">
-					<label>Name</label>
+					<label className="addEditItemHeader">Name</label>
 					<input
 						className="textInput"
 						type="text"
@@ -45,7 +61,7 @@ export default class AddEditItem extends Component {
 					/>
 				</div>
 				<div className="addEditItemColumn">
-					<label>Description</label>
+					<label className="addEditItemHeader">Description</label>
 					<textarea
 						className="textInput"
 						value={!!description ? description : ''}
@@ -53,7 +69,7 @@ export default class AddEditItem extends Component {
 					/>
 				</div>
 				<div className="addEditItemColumn">
-					<label>Quantity</label>
+					<label className="addEditItemHeader">Quantity</label>
 					<input
 						className="textInput"
 						type="text"
