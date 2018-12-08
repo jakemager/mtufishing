@@ -6,6 +6,7 @@ import ReactTable from 'react-table';
 
 import './Items.css';
 import AddEditItem from './AddEditItem';
+import { ToastContainer, toast } from 'react-toastify';
 
 class Items extends Component {
 	constructor(props) {
@@ -32,6 +33,26 @@ class Items extends Component {
 			url: '/server/locker/getItems.php'
 		}).then(res => {
 			this.setState({ items: res.data, filteredItems: res.data });
+		});
+	};
+
+	deleteItem = id => {
+		let params = new URLSearchParams();
+		params.append('Id', id);
+		axios({
+			method: 'post',
+			url: '/server/items/deleteItem.php',
+			data: params
+		}).then(res => {
+			if (res.data === true) {
+				toast.error('Item removed', {
+					position: 'bottom-right',
+					autoClose: 2000,
+					closeOnClick: true
+				});
+
+				this.getItems();
+			}
 		});
 	};
 
@@ -146,6 +167,7 @@ class Items extends Component {
 						data={filteredItems}
 						columns={this.getColumns()}
 					/>
+					<ToastContainer />
 				</div>
 			);
 	}
