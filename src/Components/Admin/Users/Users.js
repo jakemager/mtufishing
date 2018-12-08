@@ -13,7 +13,8 @@ class Users extends Component {
 		this.state = {
 			tab: 'pending',
 			users: [],
-			filteredusers: []
+			filteredUsers: [],
+			filterBarValue: ''
 		};
 	}
 
@@ -28,17 +29,17 @@ class Users extends Component {
 			method: 'post',
 			url: '/server/users/getUsers.php'
 		}).then(res => {
-			this.setState({ users: res.data, filteredusers: res.data });
+			this.setState({ users: res.data, filteredUsers: res.data });
 		});
 	};
 
 	getActions = ({ Id }) => {
 		return (
 			<div className="actionButtons">
-				<button onClick={() => this.editItem(Id)} className="editButton">
+				<button onClick={() => this.editUser(Id)} className="editButton" style={{ marginRight: 5 }}>
 					Edit
 				</button>
-				<button onClick={() => this.deleteItem(Id)} className="deleteButton">
+				<button onClick={() => this.deleteUser(Id)} className="deleteButton">
 					Delete
 				</button>
 			</div>
@@ -79,8 +80,25 @@ class Users extends Component {
 		}
 	];
 
+	filterUsers = () => {
+		const { filterBarValue, users } = this.state;
+		let filteredUsers = [];
+		if (filterBarValue.length > 0) {
+			filteredUsers = this.state.filteredUsers.filter(
+				user =>
+					(!!user.name && user.name.toLowerCase().includes(filterBarValue.toLowerCase())) ||
+					(!!user.Id && user.Id.toLowerCase().includes(filterBarValue.toLowerCase())) ||
+					(!!user.position && user.position.toLowerCase().includes(filterBarValue.toLowerCase()))
+			);
+		} else {
+			filteredUsers = [...users];
+		}
+
+		this.setState({ filteredUsers });
+	};
+
 	render() {
-		const { users } = this.state;
+		const { filteredUsers } = this.state;
 
 		if (!this.props.user.admin) {
 			this.props.history.push('/');
@@ -93,6 +111,7 @@ class Users extends Component {
 							style={{ height: 34, width: 300, fontSize: 18 }}
 							placeholder="Filter Users..."
 							type="text"
+							onChange={e => this.setState({ filterBarValue: e.target.value }, this.filterUsers)}
 						/>
 						<button
 							style={{ float: 'right' }}
@@ -106,7 +125,7 @@ class Users extends Component {
 						defaultPageSize={10}
 						style={{ textAlign: 'center' }}
 						className="-highlight"
-						data={users}
+						data={filteredUsers}
 						columns={this.getColumns()}
 					/>
 				</div>
