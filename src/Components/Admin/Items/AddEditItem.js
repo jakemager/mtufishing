@@ -8,7 +8,7 @@ export default class AddEditItem extends Component {
 		super(props);
 
 		this.state = {
-			newItem: { image: '', name: '', quantity: '', description: '' }
+			newItem: { image: '', name: '', quantity: '', description: '', id: '' }
 		};
 	}
 
@@ -25,19 +25,23 @@ export default class AddEditItem extends Component {
 	}
 
 	saveItem = () => {
+		const { edit } = this.props;
 		const { newItem } = this.state;
+
+		let url = '/server/items/newItem.php';
+		if (edit) url = '/server/items/updateItem.php';
 
 		let params = new URLSearchParams();
 		params.append('item', JSON.stringify(newItem));
 		axios({
 			method: 'post',
-			url: '/server/items/newItem.php',
+			url: url,
 			data: params
 		}).then(res => {
-			if (res.data) {
+			if (res.data === true) {
 				this.props.getItems();
-				this.setState({ newItem: { image: '', name: '', quantity: '', description: '' } });
-				toast.success('Item created!', {
+				this.setState({ newItem: { image: '', name: '', quantity: '', description: '', id: '' } });
+				toast.success(edit ? 'Item edited!' : 'Item created!', {
 					position: 'bottom-right',
 					autoClose: 2000,
 					closeOnClick: true

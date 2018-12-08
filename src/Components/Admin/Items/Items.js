@@ -17,7 +17,7 @@ class Items extends Component {
 			items: [],
 			editingItem: false,
 			filteredItems: [],
-			editItem: { image: '', name: '', quantity: '', description: '' }
+			editItem: { image: '', name: '', quantity: '', description: '', id: '' }
 		};
 	}
 
@@ -139,7 +139,12 @@ class Items extends Component {
 					<Header history={this.props.history} />
 					<div style={{ padding: 10 }}>
 						{editingItem ? (
-							<AddEditItem editItem={editItem} cancel={this.cancelEdit} getItems={this.getItems} />
+							<AddEditItem
+								editItem={editItem}
+								cancel={this.cancelEdit}
+								edit={editingItem}
+								getItems={this.getItems}
+							/>
 						) : (
 							<div>
 								<input
