@@ -10,7 +10,7 @@ export default class AddEditUser extends Component {
 		super(props);
 
 		this.state = {
-			newUser: { id: '', name: '', position: '', paid: false, admin: false, boat: false }
+			newUser: { id: '', name: '', position: 'member', paid: false, admin: false, boat: false }
 		};
 	}
 
@@ -30,20 +30,54 @@ export default class AddEditUser extends Component {
 		const { edit } = this.props;
 		const { newUser } = this.state;
 
-		let url = '/server/items/newUser.php';
-		if (edit) url = '/server/items/updateItem.php';
+		let error = false;
+		let errorMessage = '';
+
+		if (newUser.name.length === 0) {
+			error = true;
+			errorMessage = 'Name required';
+		}
+
+		if (newUser.id.length === 0) {
+			error = true;
+			errorMessage = 'Email required';
+		}
+
+		if (error) {
+			toast.error(errorMessage, {
+				position: 'bottom-right',
+				autoClose: 2000,
+				closeOnClick: true
+			});
+
+			return;
+		}
 
 		let params = new URLSearchParams();
-		params.append('item', JSON.stringify(newUser));
+		params.append('user', JSON.stringify(newUser));
 		axios({
 			method: 'post',
-			url: url,
+			url: '/server/users/newUser.php',
 			data: params
 		}).then(res => {
 			if (res.data === true) {
-				this.props.getItems();
-				this.setState({ newUser: { image: '', name: '', quantity: '', description: '', id: '' } });
-				toast.success(edit ? 'Item edited!' : 'Item created!', {
+				this.props.getUsers();
+				this.setState({
+					newUser: { id: '', name: '', position: 'member', paid: false, admin: false, boat: false }
+				});
+				toast.success(edit ? 'User edited!' : 'User created!', {
+					position: 'bottom-right',
+					autoClose: 2000,
+					closeOnClick: true
+				});
+			} else if (res.data.includes('Duplicate')) {
+				toast.error('Email already exist!', {
+					position: 'bottom-right',
+					autoClose: 2000,
+					closeOnClick: true
+				});
+			} else {
+				toast.error('Something went wrong', {
 					position: 'bottom-right',
 					autoClose: 2000,
 					closeOnClick: true
@@ -65,7 +99,11 @@ export default class AddEditUser extends Component {
 						className="textInput"
 						type="text"
 						value={id}
-						onChange={e => this.setState({ newUser: { ...newUser, id: e.target.value } })}
+						onChange={e =>
+							this.setState({
+								newUser: { ...newUser, id: e.target.value.toLowerCase().replace(/[^A-Z]/gi, '') }
+							})
+						}
 					/>
 				</div>
 				<div className="addEditUserColumn">
@@ -74,12 +112,19 @@ export default class AddEditUser extends Component {
 						className="textInput"
 						type="text"
 						value={name}
-						onChange={e => this.setState({ newUser: { ...newUser, name: e.target.value } })}
+						onChange={e =>
+							this.setState({
+								newUser: { ...newUser, name: e.target.value.replace(/[^A-Za-z ]/gi, '') }
+							})
+						}
 					/>
 				</div>
 				<div className="addEditUserColumn">
 					<label className="addEditUserHeader">Position</label>
-					<select>
+					<select
+						value={position}
+						onChange={e => this.setState({ newUser: { ...newUser, position: e.target.value } })}
+					>
 						<option value="Member">Member</option>
 						<option value="Alumni">Alumni</option>
 						<option value="President">President</option>

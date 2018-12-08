@@ -50,3 +50,13 @@ select {
 div.rt-tr {
 	align-items: center;
 }
+
+.fa-check {
+	color: green;
+	font-size: 20px;
+}
+
+.fa-times {
+	font-size: 20px;
+	color: darkred;
+}

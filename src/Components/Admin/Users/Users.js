@@ -20,7 +20,7 @@ class Users extends Component {
 			users: [],
 			filteredUsers: [],
 			filterBarValue: '',
-			editUser: { id: '', name: '', position: '', paid: false, admin: false, boat: false }
+			editUser: { id: '', name: '', position: 'member', paid: false, admin: false, boat: false }
 		};
 	}
 
@@ -84,17 +84,24 @@ class Users extends Component {
 		{
 			Header: 'Paid',
 			accessor: 'paid',
-			Cell: props => <Toggle defaultChecked={props.original.paid === '1'} />
+			Cell: props =>
+				props.original.paid == '1' ? <i className="fa-check fa" /> : <i className="fa-times fa" />
 		},
 		{
 			Header: 'Admin',
 			accessor: 'admin',
-			Cell: props => <Toggle defaultChecked={props.original.admin === '1'} />
+			Cell: props =>
+				props.original.admin == '1' ? <i className="fa-check fa" /> : <i className="fa-times fa" />
 		},
 		{
 			Header: 'Boat',
 			accessor: 'boatPrivilges',
-			Cell: props => <Toggle defaultChecked={props.original.boatPrivilges === '1'} />
+			Cell: props =>
+				props.original.boatPrivilges == '1' ? (
+					<i className="fa-check fa" />
+				) : (
+					<i className="fa-times fa" />
+				)
 		},
 		{
 			Header: 'Actions',
@@ -121,7 +128,7 @@ class Users extends Component {
 
 	cancelEdit = () => {
 		this.setState({
-			editUser: { id: '', name: '', position: '', paid: false, admin: false, boat: false },
+			editUser: { id: '', name: '', position: 'member', paid: false, admin: false, boat: false },
 			editingUser: false
 		});
 	};
