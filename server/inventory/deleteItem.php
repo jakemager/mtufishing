@@ -6,7 +6,6 @@
 	include_once "../constants.php";
 
 	$sqlLog = "DELETE FROM LockerRoomLogs WHERE ID = " . $_POST['logId'] . ";\n";
-	// $sqlLog .= "UPDATE LockerRoomItems SET quantityAvailable = quantityAvailable + 1 WHERE ID = " . $_POST['itemId'] . ";";
 
 	if (mysqli_multi_query($conn,$sqlLog)) {
 			echo json_encode(true);

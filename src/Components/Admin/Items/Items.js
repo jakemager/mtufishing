@@ -118,7 +118,7 @@ class Items extends Component {
 					<Header history={this.props.history} />
 					<div style={{ padding: 10 }}>
 						{editingItem ? (
-							<AddEditItem editItem={editItem} cancel={this.cancelEdit} />
+							<AddEditItem editItem={editItem} cancel={this.cancelEdit} getItems={this.getItems} />
 						) : (
 							<div>
 								<input

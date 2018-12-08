@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default class AddEditItem extends Component {
 	constructor(props) {
@@ -21,6 +23,28 @@ export default class AddEditItem extends Component {
 			this.setState({ newItem: this.props.editItem });
 		}
 	}
+
+	saveItem = () => {
+		const { newItem } = this.state;
+
+		let params = new URLSearchParams();
+		params.append('item', JSON.stringify(newItem));
+		axios({
+			method: 'post',
+			url: '/server/items/newItem.php',
+			data: params
+		}).then(res => {
+			if (res.data) {
+				this.props.getItems();
+				this.setState({ newItem: { image: '', name: '', quantity: '', description: '' } });
+				toast.success('Item created!', {
+					position: 'bottom-right',
+					autoClose: 2000,
+					closeOnClick: true
+				});
+			}
+		});
+	};
 
 	render() {
 		const { cancel } = this.props;
@@ -78,13 +102,14 @@ export default class AddEditItem extends Component {
 					/>
 				</div>
 				<div className="addEditItemColumn">
-					<button onClick={() => this.addItem()} className="btn editButton">
+					<button onClick={() => this.saveItem()} className="btn editButton">
 						Save
 					</button>
 					<button onClick={cancel} className="btn deleteButton">
 						Cancel
 					</button>
 				</div>
+				<ToastContainer />
 			</div>
 		);
 	}
