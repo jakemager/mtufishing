@@ -3,6 +3,10 @@ import { connect } from 'react-redux';
 import Header from '../Header';
 import axios from 'axios';
 import ReactTable from 'react-table';
+import Toggle from 'react-toggle';
+import 'react-toggle/style.css';
+
+import AddEditUser from './AddEditUser';
 
 import './Users.css';
 
@@ -12,9 +16,11 @@ class Users extends Component {
 
 		this.state = {
 			tab: 'pending',
+			editingUser: false,
 			users: [],
 			filteredUsers: [],
-			filterBarValue: ''
+			filterBarValue: '',
+			editUser: { id: '', name: '', position: '', paid: false, admin: false, boat: false }
 		};
 	}
 
@@ -33,10 +39,26 @@ class Users extends Component {
 		});
 	};
 
-	getActions = ({ Id }) => {
+	getActions = ({ Id, name, position, paid, admin, boatPrivilges }) => {
 		return (
 			<div className="actionButtons">
-				<button onClick={() => this.editUser(Id)} className="editButton" style={{ marginRight: 5 }}>
+				<button
+					onClick={() =>
+						this.setState({
+							editUser: {
+								id: Id,
+								name,
+								position,
+								paid: paid === '1',
+								admin: admin === '1',
+								boat: boatPrivilges === '1'
+							},
+							editingUser: true
+						})
+					}
+					className="editButton"
+					style={{ marginRight: 5 }}
+				>
 					Edit
 				</button>
 				<button onClick={() => this.deleteUser(Id)} className="deleteButton">
@@ -62,17 +84,17 @@ class Users extends Component {
 		{
 			Header: 'Paid',
 			accessor: 'paid',
-			Cell: props => (props.original.paid === '1' ? 'True' : 'False')
+			Cell: props => <Toggle defaultChecked={props.original.paid === '1'} />
 		},
 		{
 			Header: 'Admin',
 			accessor: 'admin',
-			Cell: props => (props.original.admin === '1' ? 'True' : 'False')
+			Cell: props => <Toggle defaultChecked={props.original.admin === '1'} />
 		},
 		{
 			Header: 'Boat',
 			accessor: 'boatPrivilges',
-			Cell: props => (props.original.boatPrivilges === '1' ? 'True' : 'False')
+			Cell: props => <Toggle defaultChecked={props.original.boatPrivilges === '1'} />
 		},
 		{
 			Header: 'Actions',
@@ -97,8 +119,15 @@ class Users extends Component {
 		this.setState({ filteredUsers });
 	};
 
+	cancelEdit = () => {
+		this.setState({
+			editUser: { id: '', name: '', position: '', paid: false, admin: false, boat: false },
+			editingUser: false
+		});
+	};
+
 	render() {
-		const { filteredUsers } = this.state;
+		const { filteredUsers, editUser, editingUser } = this.state;
 
 		if (!this.props.user.admin) {
 			this.props.history.push('/');
@@ -107,19 +136,32 @@ class Users extends Component {
 				<div>
 					<Header history={this.props.history} />
 					<div style={{ padding: 10 }}>
-						<input
-							style={{ height: 34, width: 300, fontSize: 18 }}
-							placeholder="Filter Users..."
-							type="text"
-							onChange={e => this.setState({ filterBarValue: e.target.value }, this.filterUsers)}
-						/>
-						<button
-							style={{ float: 'right' }}
-							onClick={() => this.addItem()}
-							className="editButton"
-						>
-							New User
-						</button>
+						{editingUser ? (
+							<AddEditUser
+								editUser={editUser}
+								cancel={this.cancelEdit}
+								edit={editingUser}
+								getUsers={this.getUsers}
+							/>
+						) : (
+							<div>
+								<input
+									style={{ height: 34, width: 300, fontSize: 18 }}
+									placeholder="Filter Users..."
+									type="text"
+									onChange={e =>
+										this.setState({ filterBarValue: e.target.value }, this.filterUsers)
+									}
+								/>
+								<button
+									style={{ float: 'right' }}
+									onClick={() => this.setState({ editingUser: true })}
+									className="editButton"
+								>
+									New User
+								</button>
+							</div>
+						)}
 					</div>
 					<ReactTable
 						defaultPageSize={10}
