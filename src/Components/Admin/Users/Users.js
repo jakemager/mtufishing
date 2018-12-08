@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import Header from '../Header';
 import axios from 'axios';
 import ReactTable from 'react-table';
-import Toggle from 'react-toggle';
 import 'react-toggle/style.css';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -17,7 +16,8 @@ class Users extends Component {
 
 		this.state = {
 			tab: 'pending',
-			editingUser: false,
+			isEdit: false,
+			showAddEditMenu: false,
 			users: [],
 			filteredUsers: [],
 			filterBarValue: '',
@@ -74,7 +74,8 @@ class Users extends Component {
 								admin: admin === '1',
 								boat: boatPrivilges === '1'
 							},
-							editingUser: true
+							isEdit: true,
+							showAddEditMenu: true
 						})
 					}
 					className="editButton"
@@ -150,12 +151,13 @@ class Users extends Component {
 	cancelEdit = () => {
 		this.setState({
 			editUser: { id: '', name: '', position: 'member', paid: false, admin: false, boat: false },
-			editingUser: false
+			isEdit: false,
+			showAddEditMenu: false
 		});
 	};
 
 	render() {
-		const { filteredUsers, editUser, editingUser } = this.state;
+		const { filteredUsers, editUser, isEdit, showAddEditMenu } = this.state;
 
 		if (!this.props.user.admin) {
 			this.props.history.push('/');
@@ -164,11 +166,11 @@ class Users extends Component {
 				<div>
 					<Header history={this.props.history} />
 					<div style={{ padding: 10 }}>
-						{editingUser ? (
+						{showAddEditMenu ? (
 							<AddEditUser
 								editUser={editUser}
 								cancel={this.cancelEdit}
-								edit={editingUser}
+								edit={isEdit}
 								getUsers={this.getUsers}
 							/>
 						) : (
@@ -183,7 +185,7 @@ class Users extends Component {
 								/>
 								<button
 									style={{ float: 'right' }}
-									onClick={() => this.setState({ editingUser: true })}
+									onClick={() => this.setState({ showAddEditMenu: true })}
 									className="editButton"
 								>
 									New User

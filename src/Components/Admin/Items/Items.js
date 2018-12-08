@@ -14,8 +14,10 @@ class Items extends Component {
 
 		this.state = {
 			tab: 'pending',
+			filterBarValue: '',
 			items: [],
 			editingItem: false,
+			showAddEdit: false,
 			filteredItems: [],
 			editItem: { image: '', name: '', quantity: '', description: '', id: '' }
 		};
@@ -63,7 +65,8 @@ class Items extends Component {
 					onClick={() =>
 						this.setState({
 							editItem: { id: Id, image, name, quantity, description },
-							editingItem: true
+							editingItem: true,
+							showAddEdit: true
 						})
 					}
 					className="editButton"
@@ -124,12 +127,13 @@ class Items extends Component {
 	cancelEdit = () => {
 		this.setState({
 			editItem: { image: '', name: '', quantity: '', description: '' },
-			editingItem: false
+			editingItem: false,
+			showAddEdit: false
 		});
 	};
 
 	render() {
-		const { filteredItems, editItem, editingItem } = this.state;
+		const { filteredItems, editItem, editingItem, showAddEdit } = this.state;
 
 		if (!this.props.user.admin) {
 			this.props.history.push('/');
@@ -138,11 +142,11 @@ class Items extends Component {
 				<div>
 					<Header history={this.props.history} />
 					<div style={{ padding: 10 }}>
-						{editingItem ? (
+						{showAddEdit ? (
 							<AddEditItem
 								editItem={editItem}
 								cancel={this.cancelEdit}
-								edit={editingItem}
+								isEdit={editingItem}
 								getItems={this.getItems}
 							/>
 						) : (
@@ -157,7 +161,7 @@ class Items extends Component {
 								/>
 								<button
 									style={{ float: 'right' }}
-									onClick={() => this.setState({ editingItem: true })}
+									onClick={() => this.setState({ showAddEdit: true })}
 									className="editButton"
 								>
 									New Item

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 export default class AddEditItem extends Component {
 	constructor(props) {
@@ -13,7 +13,7 @@ export default class AddEditItem extends Component {
 	}
 
 	componentDidMount() {
-		if (!!this.props.editItem) {
+		if (!!this.props.isEdit) {
 			this.setState({ newItem: this.props.editItem });
 		}
 	}
@@ -25,11 +25,11 @@ export default class AddEditItem extends Component {
 	}
 
 	saveItem = () => {
-		const { edit } = this.props;
+		const { isEdit } = this.props;
 		const { newItem } = this.state;
 
 		let url = '/server/items/newItem.php';
-		if (edit) url = '/server/items/updateItem.php';
+		if (isEdit) url = '/server/items/updateItem.php';
 
 		let params = new URLSearchParams();
 		params.append('item', JSON.stringify(newItem));
@@ -41,7 +41,7 @@ export default class AddEditItem extends Component {
 			if (res.data === true) {
 				this.props.getItems();
 				this.setState({ newItem: { image: '', name: '', quantity: '', description: '', id: '' } });
-				toast.success(edit ? 'Item edited!' : 'Item created!', {
+				toast.success(isEdit ? 'Item edited!' : 'Item created!', {
 					position: 'bottom-right',
 					autoClose: 2000,
 					closeOnClick: true
@@ -113,14 +113,14 @@ export default class AddEditItem extends Component {
 						Cancel
 					</button>
 				</div>
-				<ToastContainer />
 			</div>
 		);
 	}
 }
 
 AddEditItem.defaultProps = {
-	editItem: undefined
+	editItem: undefined,
+	isEdit: false
 };
 
 AddEditItem.propTypes = {
@@ -129,5 +129,6 @@ AddEditItem.propTypes = {
 		name: PropTypes.string,
 		description: PropTypes.string,
 		quantity: PropTypes.int
-	})
+	}),
+	isEdit: PropTypes.bool
 };

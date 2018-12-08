@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import Toggle from 'react-toggle';
 import 'react-toggle/style.css';
 
@@ -165,7 +165,6 @@ export default class AddEditUser extends Component {
 						Cancel
 					</button>
 				</div>
-				<ToastContainer />
 			</div>
 		);
 	}
