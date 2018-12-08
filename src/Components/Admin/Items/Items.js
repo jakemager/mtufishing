@@ -32,7 +32,7 @@ class Items extends Component {
 			method: 'post',
 			url: '/server/locker/getItems.php'
 		}).then(res => {
-			this.setState({ items: res.data, filteredItems: res.data });
+			this.setState({ items: res.data, filteredItems: res.data }, this.filterItems);
 		});
 	};
 
@@ -82,7 +82,7 @@ class Items extends Component {
 		const { filterBarValue, items } = this.state;
 		let filteredItems = [];
 		if (filterBarValue.length > 0) {
-			filteredItems = this.state.filteredItems.filter(
+			filteredItems = items.filter(
 				item =>
 					(!!item.name && item.name.toLowerCase().includes(filterBarValue.toLowerCase())) ||
 					(!!item.description &&

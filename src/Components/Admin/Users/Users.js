@@ -5,6 +5,7 @@ import axios from 'axios';
 import ReactTable from 'react-table';
 import Toggle from 'react-toggle';
 import 'react-toggle/style.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 import AddEditUser from './AddEditUser';
 
@@ -35,7 +36,27 @@ class Users extends Component {
 			method: 'post',
 			url: '/server/users/getUsers.php'
 		}).then(res => {
-			this.setState({ users: res.data, filteredUsers: res.data });
+			this.setState({ users: res.data, filteredUsers: res.data }, this.filterUsers);
+		});
+	};
+
+	deleteUser = id => {
+		let params = new URLSearchParams();
+		params.append('id', id);
+		axios({
+			method: 'post',
+			url: '/server/users/deleteUser.php',
+			data: params
+		}).then(res => {
+			if (res.data === true) {
+				toast.error('User removed', {
+					position: 'bottom-right',
+					autoClose: 2000,
+					closeOnClick: true
+				});
+
+				this.getUsers();
+			}
 		});
 	};
 
@@ -113,7 +134,7 @@ class Users extends Component {
 		const { filterBarValue, users } = this.state;
 		let filteredUsers = [];
 		if (filterBarValue.length > 0) {
-			filteredUsers = this.state.filteredUsers.filter(
+			filteredUsers = users.filter(
 				user =>
 					(!!user.name && user.name.toLowerCase().includes(filterBarValue.toLowerCase())) ||
 					(!!user.Id && user.Id.toLowerCase().includes(filterBarValue.toLowerCase())) ||
@@ -177,6 +198,7 @@ class Users extends Component {
 						data={filteredUsers}
 						columns={this.getColumns()}
 					/>
+					<ToastContainer />
 				</div>
 			);
 	}
