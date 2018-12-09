@@ -53,11 +53,14 @@ export default class AddEditUser extends Component {
 			return;
 		}
 
+		let url = '/server/users/newUser.php';
+		if (edit) url = '/server/users/updateUser.php';
+
 		let params = new URLSearchParams();
 		params.append('user', JSON.stringify(newUser));
 		axios({
 			method: 'post',
-			url: '/server/users/newUser.php',
+			url: url,
 			data: params
 		}).then(res => {
 			if (res.data === true) {
@@ -87,7 +90,7 @@ export default class AddEditUser extends Component {
 	};
 
 	render() {
-		const { cancel } = this.props;
+		const { cancel, edit } = this.props;
 		const { newUser } = this.state;
 		const { id, name, position, paid, boat, admin } = this.state.newUser;
 
@@ -96,7 +99,8 @@ export default class AddEditUser extends Component {
 				<div className="addEditUserColumn">
 					<label className="addEditUserHeader">Email ID</label>
 					<input
-						className="textInput"
+						disabled={edit}
+						className={`textInput ${edit && 'disabled'}`}
 						type="text"
 						value={id}
 						onChange={e =>

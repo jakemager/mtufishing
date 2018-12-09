@@ -36,6 +36,12 @@
 	max-width: 100%;
 }
 
+.textInput.disabled {
+	background: #eee;
+	color: #000;
+	cursor: no-drop;
+}
+
 select {
 	border-radius: 3px;
 	border: 1px solid #cccccc;
