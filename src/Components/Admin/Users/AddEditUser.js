@@ -161,7 +161,7 @@ export default class AddEditUser extends Component {
 						onChange={e => this.setState({ newUser: { ...newUser, boat: !boat } })}
 					/>
 				</div>
-				<div className="addEditUserColumn">
+				<div className="addEditUserColumn" style={{ width: 35 }}>
 					<button onClick={() => this.saveItem()} className="btn editButton">
 						Save
 					</button>
