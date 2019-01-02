@@ -31,12 +31,19 @@ export default class AddEditSponsor extends Component {
 		let url = '/server/sponsors/newSponsor.php';
 		if (isEdit) url = '/server/sponsors/updateSponsor.php';
 
-		let params = new URLSearchParams();
+		// let params = new URLSearchParams();
+		// params.append('sponsor', JSON.stringify(newSponsor));
+
+		const params = new FormData();
+		params.append('image', document.getElementById('file-upload').files[0]);
 		params.append('sponsor', JSON.stringify(newSponsor));
 		axios({
 			method: 'post',
 			url: url,
-			data: params
+			data: params,
+			headers: {
+				'content-type': 'multipart/form-data'
+			}
 		}).then(res => {
 			if (res.data === true) {
 				this.props.getSponsors();
