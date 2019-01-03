@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import './InstagramSection.css';
 
@@ -16,13 +17,14 @@ export default class InstagramSection extends Component {
 	}
 
 	fetchInstagram = () => {
-		fetch(
-			'https://api.instagram.com/v1/users/self/media/recent/?access_token=7573298529.5136810.902ba8a4eecd4a9c846e291b9ef83d57'
-		)
-			.then(resp => resp.json())
+		axios({
+			method: 'get',
+			url:
+				'https://api.instagram.com/v1/users/self/media/recent/?access_token=7573298529.5136810.902ba8a4eecd4a9c846e291b9ef83d57'
+		})
 			.then(res => {
 				let instagram = [];
-				for (let i = 0; i < 8; i++) instagram.push(res.data[i].images.standard_resolution.url);
+				for (let i = 0; i < 8; i++) instagram.push(res.data.data[i].images.standard_resolution.url);
 
 				this.setState({
 					instagram

@@ -26,7 +26,7 @@
 		$target_file = 'no-img.jpg';
 	} else {
 
-		$target_dir = "Sponsors/";
+		$target_dir = "sponsorImages/";
 		$temp = explode(".", $image["name"]);
 		$newfilename = generateRandomString() . '.' . end($temp);
 		$target_file = $target_dir . basename($newfilename); 

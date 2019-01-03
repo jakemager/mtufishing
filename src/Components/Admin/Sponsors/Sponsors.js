@@ -101,7 +101,10 @@ class Sponsors extends Component {
 			Header: 'Image',
 			accessor: 'image',
 			Cell: props => (
-				<img style={{ width: 75, height: 75, objectFit: 'contain' }} src={`/${props.value}`} />
+				<img
+					style={{ width: 75, height: 75, objectFit: 'contain' }}
+					src={`/server/sponsors/sponsorImages/${props.value}`}
+				/>
 			)
 		},
 		{
