@@ -1,10 +1,23 @@
 import React, { Component } from 'react';
-import groupImage from '../../assets/images/group2018.jpg';
-import boardImage from '../../assets/images/board2017.jpg';
 
 import './ClubSection.css';
 
 export default class ClubSection extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			president: '',
+			vicePresident: '',
+			treasurer: '',
+			secretary: '',
+			sponsorship: '',
+			publicRelations: '',
+			equipmentManager: '',
+			tripCoordinator: ''
+		};
+	}
+
 	render() {
 		return (
 			<div className="clubSection">
@@ -22,12 +35,12 @@ export default class ClubSection extends Component {
 						</p>
 					</div>
 					<div className="clubConent">
-						<img className="clubImage" src={groupImage} alt="Group" />
+						<img className="clubImage" src="/server/home/images/members.jpeg" alt="Group" />
 					</div>
 				</div>
 				<div className="clubRow" style={{ marginTop: 45 }}>
 					<div className="clubConent">
-						<img className="clubImage" src={boardImage} alt="Board" />
+						<img className="clubImage" src="/server/home/images/board.jpeg" alt="Board" />
 					</div>
 					<div className="clubConent">
 						<h2 className="clubHeader">The Board</h2>

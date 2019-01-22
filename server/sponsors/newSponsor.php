@@ -63,6 +63,7 @@
 			echo "<br />Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
 			$uploadOk = 0;
 		}
+
 		// Check if file already exists
 		while (file_exists($target_file)) {
 			$newfilename = generateRandomString() . '.' . end($temp);
@@ -90,7 +91,7 @@
 	
 
 	$sql .= "INSERT INTO `Sponsors` (`ID`, `name`, `website`, `image`)
-	VALUES(NULL, '" . $sponsor['name'] . "', '" . $sponsor['website'] . "', '" . $target_file . "');\n";
+	VALUES(NULL, '" . $sponsor['name'] . "', '" . $sponsor['website'] . "', '" . $newfilename . "');\n";
 
 	if (mysqli_query($conn, $sql)) {
 			echo json_encode(true);

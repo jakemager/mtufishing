@@ -8,7 +8,8 @@ export default class AddEditSponsor extends Component {
 		super(props);
 
 		this.state = {
-			newSponsor: { image: '', name: '', website: '', id: '' }
+			newSponsor: { image: '', name: '', website: '', id: '' },
+			updatedImage: false
 		};
 	}
 
@@ -26,17 +27,15 @@ export default class AddEditSponsor extends Component {
 
 	saveItem = () => {
 		const { isEdit } = this.props;
-		const { newSponsor } = this.state;
+		const { newSponsor, updatedImage } = this.state;
 
 		let url = '/server/sponsors/newSponsor.php';
 		if (isEdit) url = '/server/sponsors/updateSponsor.php';
 
-		// let params = new URLSearchParams();
-		// params.append('sponsor', JSON.stringify(newSponsor));
-
 		const params = new FormData();
 		params.append('image', document.getElementById('file-upload').files[0]);
 		params.append('sponsor', JSON.stringify(newSponsor));
+		params.append('updatedImage', updatedImage);
 		axios({
 			method: 'post',
 			url: url,
@@ -53,26 +52,33 @@ export default class AddEditSponsor extends Component {
 					autoClose: 2000,
 					closeOnClick: true
 				});
+				this.props.cancel();
 			}
 		});
 	};
 
 	render() {
 		const { cancel } = this.props;
-		const { newSponsor } = this.state;
+		const { newSponsor, updatedImage } = this.state;
 		const { name, website, image } = this.state.newSponsor;
+
+		let imgSrc = `/server/sponsors/sponsorImages/${image}`;
+		if (updatedImage) {
+			imgSrc = image;
+		}
 
 		return (
 			<div className="addEditItemContainer">
 				<div className="addEditItemColumn">
 					<label className="addEditItemHeader">Image</label>
-					<img src={`${image}`} style={{ width: 75, height: 75, objectFit: 'contain' }} />
+					<img src={`${imgSrc}`} style={{ width: 75, height: 75, objectFit: 'contain' }} />
 					<input
 						type="file"
 						accept="image/*"
 						onChange={e =>
 							this.setState({
-								newSponsor: { ...newSponsor, image: URL.createObjectURL(e.target.files[0]) }
+								newSponsor: { ...newSponsor, image: URL.createObjectURL(e.target.files[0]) },
+								updatedImage: true
 							})
 						}
 						id="file-upload"

@@ -37,7 +37,7 @@
 	position: absolute;
 	top: 25%;
 	left: 32%;
-	font-size: 95px;
+	font-size: 95px !important;
 	color: green;
 }
 

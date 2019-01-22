@@ -19,7 +19,13 @@ class Sponsors extends Component {
 			editingSponsor: false,
 			showAddEdit: false,
 			filteredSponsors: [],
-			editSponsor: { image: '', name: '', quantity: '', description: '', id: '' }
+			editSponsor: {
+				image: '',
+				name: '',
+				quantity: '',
+				description: '',
+				id: ''
+			}
 		};
 	}
 
