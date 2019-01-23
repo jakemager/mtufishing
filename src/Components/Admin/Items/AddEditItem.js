@@ -8,7 +8,8 @@ export default class AddEditItem extends Component {
 		super(props);
 
 		this.state = {
-			newItem: { image: '', name: '', quantity: '', description: '', id: '' }
+			newItem: { image: '', name: '', quantity: '', description: '', id: '' },
+			updatedImage: false
 		};
 	}
 
@@ -26,17 +27,23 @@ export default class AddEditItem extends Component {
 
 	saveItem = () => {
 		const { isEdit } = this.props;
-		const { newItem } = this.state;
+		const { newItem, updatedImage } = this.state;
 
 		let url = '/server/items/newItem.php';
 		if (isEdit) url = '/server/items/updateItem.php';
 
-		let params = new URLSearchParams();
+		let params = new FormData();
 		params.append('item', JSON.stringify(newItem));
+		params.append('image', document.getElementById('file-upload').files[0]);
+		params.append('updatedImage', updatedImage);
+
 		axios({
 			method: 'post',
 			url: url,
-			data: params
+			data: params,
+			headers: {
+				'content-type': 'multipart/form-data'
+			}
 		}).then(res => {
 			if (res.data === true) {
 				this.props.getItems();
@@ -46,26 +53,33 @@ export default class AddEditItem extends Component {
 					autoClose: 2000,
 					closeOnClick: true
 				});
+				this.props.cancel();
 			}
 		});
 	};
 
 	render() {
 		const { cancel } = this.props;
-		const { newItem } = this.state;
+		const { newItem, updatedImage } = this.state;
 		const { name, description, quantity, image } = this.state.newItem;
+
+		let imgSrc = `/server/items/images/${image}`;
+		if (updatedImage) {
+			imgSrc = image;
+		}
 
 		return (
 			<div className="addEditItemContainer">
 				<div className="addEditItemColumn">
 					<label className="addEditItemHeader">Image</label>
-					<img src={`${image}`} style={{ width: 75, height: 75, objectFit: 'contain' }} />
+					<img src={`${imgSrc}`} style={{ width: 75, height: 75, objectFit: 'contain' }} />
 					<input
 						type="file"
 						accept="image/*"
 						onChange={e =>
 							this.setState({
-								newItem: { ...newItem, image: URL.createObjectURL(e.target.files[0]) }
+								newItem: { ...newItem, image: URL.createObjectURL(e.target.files[0]) },
+								updatedImage: true
 							})
 						}
 						id="file-upload"

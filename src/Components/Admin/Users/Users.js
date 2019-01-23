@@ -64,7 +64,7 @@ class Users extends Component {
 		return (
 			<div className="actionButtons">
 				<button
-					onClick={() =>
+					onClick={() => {
 						this.setState({
 							editUser: {
 								id: Id,
@@ -76,8 +76,9 @@ class Users extends Component {
 							},
 							isEdit: true,
 							showAddEditMenu: true
-						})
-					}
+						});
+						window.scrollTo(0, 0);
+					}}
 					className="editButton"
 					style={{ marginRight: 5 }}
 				>

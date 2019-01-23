@@ -62,13 +62,14 @@ class Items extends Component {
 		return (
 			<div className="actionButtons">
 				<button
-					onClick={() =>
+					onClick={() => {
 						this.setState({
 							editItem: { id: Id, image, name, quantity, description },
 							editingItem: true,
 							showAddEdit: true
-						})
-					}
+						});
+						window.scrollTo(0, 0);
+					}}
 					className="editButton"
 					style={{ marginRight: 5 }}
 				>
@@ -103,7 +104,10 @@ class Items extends Component {
 			Header: 'Image',
 			accessor: 'image',
 			Cell: props => (
-				<img style={{ width: 75, height: 75, objectFit: 'contain' }} src={`/${props.value}`} />
+				<img
+					style={{ width: 75, height: 75, objectFit: 'contain' }}
+					src={`/server/items/images/${props.value}`}
+				/>
 			)
 		},
 		{

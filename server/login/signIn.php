@@ -27,6 +27,7 @@ if ($payload) {
 	
 	// If not authorized google account
 	if ($payload['iss'] != 'accounts.google.com' || $payload['aud'] != $CLIENT_ID) {
+		echo "Not authorized google account";
 		header("HTTP/1.1 403 Access Denied");
 		return;
 	}
@@ -53,11 +54,13 @@ if ($payload) {
 		echo $conn->error;
 
 	} else {
+		echo "User not found";
 		header("HTTP/1.1 403 Access Denied");
 		return;
 	}
 
 } else {
+	echo "Invalid login token";
   	// Invalid ID token
   	header("HTTP/1.1 403 Access Denied");
 	return;

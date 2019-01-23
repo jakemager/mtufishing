@@ -4,7 +4,6 @@ import Header from '../Header';
 import axios from 'axios';
 import ReactTable from 'react-table';
 
-// import './sponsors.css';
 import AddEditSponsor from './AddEditSponsor';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -66,13 +65,14 @@ class Sponsors extends Component {
 		return (
 			<div className="actionButtons">
 				<button
-					onClick={() =>
+					onClick={() => {
 						this.setState({
 							editSponsor: { id: Id, image, name, website },
 							editingSponsor: true,
 							showAddEdit: true
-						})
-					}
+						});
+						window.scrollTo(0, 0);
+					}}
 					className="editButton"
 					style={{ marginRight: 5 }}
 				>
