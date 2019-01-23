@@ -9,7 +9,7 @@
 	display: flex;
 	flex-direction: column;
 	color: #000;
-	padding-bottom: 10vh;
+	padding-bottom: 3vh;
 	align-items: center;
 	justify-content: center;
 }
@@ -22,7 +22,7 @@
 	padding-bottom: 10px;
 	font-weight: 200;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-	width: 15vw;
+	width: 100vw;
 }
 
 .sponsorBody {
@@ -30,18 +30,45 @@
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: center;
-	width: 60vw;
+	width: 100vw;
 }
 
 .sponsorImageContainer {
-	margin: 25px;
-	width: 15vw;
-	height: 25vh;
+	margin: 2px 5px;
+	width: 20vw;
 }
 
 .sponsorImage {
 	object-fit: contain;
 	object-position: center;
 	width: 100%;
-	height: 35vh;
+	height: 75px;
+}
+
+/* Desktop */
+@media only screen and (min-width: 768px) {
+	.sponsorSection {
+		padding-bottom: 10vh;
+	}
+
+	.sponsorHeader {
+		width: 15vw;
+	}
+
+	.sponsorBody {
+		width: 80vw;
+	}
+
+	.sponsorImageContainer {
+		margin: 25px;
+		width: 15vw;
+		height: 25vh;
+	}
+
+	.sponsorImage {
+		object-fit: contain;
+		object-position: center;
+		width: 100%;
+		height: 135px;
+	}
 }

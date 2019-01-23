@@ -1,5 +1,7 @@
+/* Mobile */
 .logo {
-	height: 60vmin;
+	height: 80vmin;
+	margin-top: 5vh;
 }
 
 .welcome {
@@ -78,4 +80,12 @@
 	border: 1px solid #fff;
 	width: 0px;
 	height: 30vh;
+}
+
+/* Desktop */
+@media only screen and (min-width: 768px) {
+	.logo {
+		height: 60vmin;
+		margin-top: 0;
+	}
 }

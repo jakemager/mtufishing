@@ -71,12 +71,20 @@ class Locker extends Component {
 							<div className="itemImageContainer itemImageContainerOverlay">
 								<div className="inCartOverlay itemImage">
 									<i className="inCartIcon fa fa-check" />
-									<img src={`/${item.image}`} alt={item.name} className="itemImage" />
+									<img
+										src={`/server/items/images/${item.image}`}
+										alt={item.name}
+										className="itemImage"
+									/>
 								</div>
 							</div>
 						) : (
 							<div className="itemImageContainer">
-								<img src={`/${item.image}`} alt={item.name} className="itemImage" />
+								<img
+									src={`/server/items/images/${item.image}`}
+									alt={item.name}
+									className="itemImage"
+								/>
 							</div>
 						)}
 
@@ -112,7 +120,11 @@ class Locker extends Component {
 					<div key={item.Id} className="itemContainer">
 						<div className="itemImageContainer itemImageContainerOverlayNotAvaliable">
 							<div className="inCartOverlay itemImage">
-								<img src={`/${item.image}`} alt={item.name} className="itemImage" />
+								<img
+									src={`/server/items/images/${item.image}`}
+									alt={item.name}
+									className="itemImage"
+								/>
 							</div>
 						</div>
 

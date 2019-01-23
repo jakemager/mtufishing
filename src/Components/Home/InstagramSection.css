@@ -5,6 +5,7 @@
 	flex-wrap: wrap;
 	align-items: center;
 	justify-content: center;
+	padding: 20px 0;
 }
 
 .instagramSection:hover {
@@ -12,8 +13,8 @@
 }
 
 .instagramImg {
-	width: 25vw;
-	height: 325px;
+	width: 100px;
+	height: 100px;
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -38,6 +39,24 @@
 }
 
 .instagramLogo {
-	width: 45vw;
-	padding: 45px;
+	width: 100vw;
+	background-size: cover;
+	background-position: center;
+}
+
+/* Desktop */
+@media only screen and (min-width: 768px) {
+	.instagramSection {
+		padding: 0;
+	}
+
+	.instagramImg {
+		width: 25vw;
+		height: 325px;
+	}
+
+	.instagramLogo {
+		width: 45vw;
+		padding: 45px;
+	}
 }

@@ -9,15 +9,15 @@
 	display: flex;
 	flex-direction: row;
 	color: #000;
-	padding-right: 25px;
 	align-items: center;
 	justify-content: center;
+	flex-wrap: wrap;
 }
 
 .infoContent {
-	margin-top: 15vh;
-	margin-bottom: 15vh;
-	width: 45vw;
+	margin-top: 5vh;
+	margin-bottom: 3vh;
+	width: 100vw;
 	object-fit: contain;
 }
 
@@ -29,18 +29,19 @@
 	margin-bottom: 10px;
 	padding-bottom: 10px;
 	font-weight: 200;
-	text-align: left;
+	text-align: center;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-	width: 35vw;
+	width: 100vw;
 }
 
 .infoText {
 	color: #fff;
 	margin: 0 0 0 3vw;
-	text-align: left;
+	text-align: center;
 	font-size: 18px;
 	font-weight: 200;
 	line-height: 36px;
+	padding: 0 20px;
 }
 
 a {
@@ -49,4 +50,26 @@ a {
 
 a:hover {
 	color: #fee3b5;
+}
+
+/* Desktop */
+@media only screen and (min-width: 768px) {
+	.infoSection {
+		padding-right: 25px;
+	}
+
+	.infoContent {
+		margin-top: 15vh;
+		margin-bottom: 15vh;
+		width: 45vw;
+	}
+
+	.infoHeader {
+		text-align: left;
+		width: 35vw;
+	}
+
+	.infoText {
+		text-align: left;
+	}
 }

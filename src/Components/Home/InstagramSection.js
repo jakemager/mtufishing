@@ -14,7 +14,17 @@ export default class InstagramSection extends Component {
 
 	componentDidMount() {
 		this.fetchInstagram();
+		window.addEventListener('resize', this.handleWindowSizeChange);
+		this.handleWindowSizeChange();
 	}
+
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.handleWindowSizeChange);
+	}
+
+	handleWindowSizeChange = () => {
+		this.setState({ width: window.innerWidth });
+	};
 
 	fetchInstagram = () => {
 		axios({
@@ -35,6 +45,33 @@ export default class InstagramSection extends Component {
 
 	render() {
 		const { instagram, showInstaOverlay } = this.state;
+		const { width } = this.state;
+		const isMobile = width <= 500;
+
+		if (isMobile) {
+			return (
+				<div
+					className="instagramSection"
+					onClick={() => window.open('https://www.instagram.com/mtu_fishingclub/', '_blank')}
+				>
+					<img
+						alt="Instagram Logo"
+						className="instagramLogo"
+						src="https://miamimusicproject.org/wp-content/uploads/2017/10/2475.new-instagram-text-logo.png"
+					/>
+					{instagram.map((url, i) => {
+						return (
+							<div
+								onMouseEnter={() => this.setState({ showInstaOverlay: true })}
+								className="instagramImg"
+								key={i}
+								style={{ backgroundImage: `url(${url})` }}
+							/>
+						);
+					})}
+				</div>
+			);
+		}
 
 		return (
 			<div

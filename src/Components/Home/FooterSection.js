@@ -67,7 +67,7 @@ class FooterSection extends Component {
 						/>
 					)}
 				</div>
-				<p style={{ paddingTop: 15 }}>Website by Jake Mager</p>
+				<p>Website by Jake Mager</p>
 			</div>
 		);
 	}

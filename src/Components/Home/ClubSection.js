@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import './ClubSection.css';
 
@@ -16,9 +17,58 @@ export default class ClubSection extends Component {
 			equipmentManager: '',
 			tripCoordinator: ''
 		};
+
+		this.fetchPositions();
 	}
 
+	fetchPositions = () => {
+		axios({
+			method: 'get',
+			url: '/server/home/getPositions.php'
+		})
+			.then(res => {
+				this.setState({
+					president: !!res.data.filter(o => o.position === 'President')[0]
+						? res.data.filter(o => o.position === 'President')[0].name
+						: '',
+					vicePresident: !!res.data.filter(o => o.position === 'Vice President')[0]
+						? res.data.filter(o => o.position === 'Vice President')[0].name
+						: '',
+					treasurer: !!res.data.filter(o => o.position === 'Treasurer')[0]
+						? res.data.filter(o => o.position === 'Treasurer')[0].name
+						: '',
+					secretary: !!res.data.filter(o => o.position === 'Secretary')[0]
+						? res.data.filter(o => o.position === 'Secretary')[0].name
+						: '',
+					sponsorship: !!res.data.filter(o => o.position === 'Sponsorship')[0]
+						? res.data.filter(o => o.position === 'Sponsorship')[0].name
+						: '',
+					publicRelations: !!res.data.filter(o => o.position === 'Public Relations')[0]
+						? res.data.filter(o => o.position === 'Public Relations')[0].name
+						: '',
+					equipmentManager: !!res.data.filter(o => o.position === 'Equipment Manager')[0]
+						? res.data.filter(o => o.position === 'Equipment Manager')[0].name
+						: '',
+					tripCoordinator: !!res.data.filter(o => o.position === 'Trip Coordinator')[0]
+						? res.data.filter(o => o.position === 'Trip Coordinator')[0].name
+						: ''
+				});
+			})
+			.catch(err => console.log('error', err));
+	};
+
 	render() {
+		const {
+			president,
+			vicePresident,
+			treasurer,
+			secretary,
+			sponsorship,
+			publicRelations,
+			equipmentManager,
+			tripCoordinator
+		} = this.state;
+
 		return (
 			<div className="clubSection">
 				<div className="clubRow">
@@ -46,28 +96,28 @@ export default class ClubSection extends Component {
 						<h2 className="clubHeader">The Board</h2>
 						<ul className="boardList">
 							<li>
-								<strong>President:</strong> Pat Ricchi
+								<strong>President:</strong> {president}
 							</li>
 							<li>
-								<strong>Vice President:</strong> Lukas Evans
+								<strong>Vice President:</strong> {vicePresident}
 							</li>
 							<li>
-								<strong>Treasurer:</strong> Jacob Anderson
+								<strong>Treasurer:</strong> {treasurer}
 							</li>
 							<li>
-								<strong>Secretary:</strong> Michael Gobeli
+								<strong>Secretary:</strong> {secretary}
 							</li>
 							<li>
-								<strong>Sponsorship:</strong> Kaylynn Foster
+								<strong>Sponsorship:</strong> {sponsorship}
 							</li>
 							<li>
-								<strong>Public Relations:</strong> Thomas Gunst
+								<strong>Public Relations:</strong> {publicRelations}
 							</li>
 							<li>
-								<strong>Equipment Manager:</strong> Mike Summerfield&nbsp;
+								<strong>Equipment Manager:</strong> {equipmentManager}
 							</li>
 							<li>
-								<strong>Trip Coordinator:</strong> Matthew Barker
+								<strong>Trip Coordinator:</strong> {tripCoordinator}
 							</li>
 						</ul>
 					</div>
