@@ -9,19 +9,19 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	width: 75vw;
+	width: 100vw;
 }
 
 .checkoutItemContainer {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	border-bottom: 1px solid #000;
+	border-bottom: 1px solid #ccc;
 	padding: 5px;
 }
 
 .checkoutItemContainer:nth-child(2) {
-	border-top: 1px solid #000;
+	border-top: 1px solid #ccc;
 }
 
 .checkoutItemDetailsContainer {
@@ -68,36 +68,40 @@
 	text-decoration: none !important;
 	vertical-align: middle;
 	height: 30px;
-	width: 55px;
 }
 
 .deleteLink {
-	color: #0f68bd;
-	font-size: 14px;
+	color: #fff;
+	width: 75px;
+	background: red;
 }
 
 .deleteLink:hover {
-	color: #f39e38;
-	font-size: 14px;
-	text-decoration: underline;
+	background: darkred;
 	cursor: pointer;
 }
 
 .checkoutForm {
 	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
+	flex-direction: column;
+	justify-content: space-around;
 	margin-top: 15px;
 	margin-bottom: 55px;
+	width: 100vw;
 }
 
 .dateForms {
 	display: flex;
 	flex-direction: row;
+	justify-content: space-between;
+	padding-top: 10px;
+	width: 75vw;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .datePicker {
-	background: #e7e9ec;
+	background: #fff;
 	border-radius: 3px;
 	border-color: #adb1b8 #a2a6ac #8d9096;
 	border-style: solid;
@@ -110,6 +114,18 @@
 	text-decoration: none !important;
 	vertical-align: middle;
 	height: 30px;
+}
+
+.checkoutBtnWrapper {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.checkoutBtn {
+	margin-top: 15px;
+	margin-bottom: 0;
+	width: 45vw;
 }
 
 button {
@@ -149,4 +165,42 @@ button:hover {
 	padding: 0;
 	cursor: pointer;
 	color: #f59f27;
+}
+
+/* Desktop */
+@media only screen and (min-width: 650px) {
+	.cart {
+		width: 75vw;
+	}
+
+	.checkoutForm {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+		margin-top: 15px;
+		margin-bottom: 55px;
+		width: 75vw;
+		line-height: 30px;
+	}
+
+	.dateForms {
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-end;
+		padding-top: 10px;
+		width: 75vw;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.checkoutBtn {
+		margin-top: 15px;
+		margin-bottom: 0;
+		width: 135px;
+	}
+
+	.checkoutBtnWrapper {
+		justify-content: flex-end;
+		width: 75vw;
+	}
 }

@@ -122,21 +122,29 @@ class Checkout extends Component {
 
 								<div className="checkoutForm">
 									<div className="dateForms">
-										<div>
-											Checkout Date:
-											<input className="datePicker" type="date" disabled value={today} />
-										</div>
-										<div style={{ marginLeft: 15 }}>
-											Return Date:
-											<input
-												className="datePicker"
-												type="date"
-												value={returnDate}
-												onChange={e => this.setState({ returnDate: e.target.value })}
-											/>
-										</div>
+										Checkout Date:
+										<input
+											className="datePicker"
+											type="date"
+											disabled
+											style={{ background: '#e7e9ec' }}
+											value={today}
+										/>
 									</div>
-									<button onClick={() => this.checkout()}>Checkout</button>
+									<div className="dateForms">
+										Return Date:
+										<input
+											className="datePicker"
+											type="date"
+											value={returnDate}
+											onChange={e => this.setState({ returnDate: e.target.value })}
+										/>
+									</div>
+									<div className="checkoutBtnWrapper">
+										<button className="checkoutBtn" onClick={() => this.checkout()}>
+											Checkout
+										</button>
+									</div>
 								</div>
 							</div>
 						) : (

@@ -45,19 +45,21 @@ class CheckoutItem extends Component {
 							<p className="title">{name}</p>
 							{this.getInStock()}
 						</div>
-						<div className="deleteLink" onClick={remove}>
+						<button className="deleteLink" onClick={remove}>
 							Delete
-						</div>
+						</button>
 					</div>
 				</div>
-				<select
-					className="selectBox"
-					defaultValue={1}
-					value={quantity}
-					onChange={e => this.props.updateQuantity(Id, e.target.value)}
-				>
-					{this.createSelectOptions()}
-				</select>
+				<div style={{ width: 55 }}>
+					<select
+						className="selectBox"
+						defaultValue={1}
+						value={quantity}
+						onChange={e => this.props.updateQuantity(Id, e.target.value)}
+					>
+						{this.createSelectOptions()}
+					</select>
+				</div>
 			</div>
 		);
 	}
