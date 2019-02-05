@@ -19,13 +19,25 @@ class Members extends Component {
 		this.state = {
 			loggedIn: false,
 			user: {},
-			lockerFilter: ''
+			lockerFilter: '',
+			isMobile: false
 		};
 	}
 
 	componentDidMount() {
 		if (!this.props.user.userId) this.props.setUser();
+		window.addEventListener('resize', this.handleWindowSizeChange);
+		this.handleWindowSizeChange();
 	}
+
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.handleWindowSizeChange);
+	}
+
+	handleWindowSizeChange = () => {
+		console.log(window.innerWidth);
+		this.setState({ isMobile: window.innerWidth <= 650 });
+	};
 
 	onSignIn = user => {
 		if (!!user.error) {
@@ -50,20 +62,22 @@ class Members extends Component {
 
 	render() {
 		const { checkout, user, openSideMenu } = this.props;
-		const { loggedIn, lockerFilter } = this.state;
+		const { loggedIn, lockerFilter, isMobile } = this.state;
 
 		if (!!user.userId) {
 			return (
 				<div>
 					<div className="header">
 						<div className="headerTitle">MTU Fishing Club Locker</div>
-						<input
-							type="text"
-							placeholder="Search Locker"
-							className="searchBox"
-							value={lockerFilter}
-							onChange={e => this.setState({ lockerFilter: e.target.value })}
-						/>
+						{!isMobile && (
+							<input
+								type="text"
+								placeholder="Search Locker"
+								className="searchBox"
+								value={lockerFilter}
+								onChange={e => this.setState({ lockerFilter: e.target.value })}
+							/>
+						)}
 						<div className="headerMenu">
 							<div className="headerOption" onClick={() => this.props.history.push('/')}>
 								Home
@@ -74,12 +88,10 @@ class Members extends Component {
 							>
 								Checkout ({checkout.length})
 							</div>
-							{user.admin ? (
+							{user.admin && (
 								<div className="headerOption" onClick={() => openSideMenu('admin')}>
 									<i className="fa fa-cog" />
 								</div>
-							) : (
-								<div />
 							)}
 
 							<div className="headerOption" onClick={() => openSideMenu('user')}>
@@ -88,7 +100,11 @@ class Members extends Component {
 						</div>
 					</div>
 					<div style={{ display: 'flex', justifyContent: 'center' }}>
-						<Locker filter={lockerFilter} />
+						<Locker
+							filter={lockerFilter}
+							changeFilter={e => this.setState({ lockerFilter: e.target.value })}
+							isMobile={isMobile}
+						/>
 					</div>
 				</div>
 			);

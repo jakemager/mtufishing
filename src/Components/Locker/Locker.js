@@ -25,8 +25,6 @@ class Locker extends Component {
 
 	componentDidMount() {
 		this.getItems();
-		window.addEventListener('resize', this.handleWindowSizeChange);
-		this.handleWindowSizeChange();
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -45,15 +43,6 @@ class Locker extends Component {
 		}
 	}
 
-	componentWillUnmount() {
-		window.removeEventListener('resize', this.handleWindowSizeChange);
-	}
-
-	handleWindowSizeChange = () => {
-		console.log(window.innerWidth);
-		this.setState({ isMobile: window.innerWidth <= 650 });
-	};
-
 	getItems = () => {
 		axios({
 			method: 'post',
@@ -64,8 +53,8 @@ class Locker extends Component {
 	};
 
 	renderItems = () => {
-		const { checkout } = this.props;
-		const { filteredItems, isMobile } = this.state;
+		const { checkout, isMobile } = this.props;
+		const { filteredItems } = this.state;
 
 		return filteredItems.map(item => {
 			let inCart = checkout.filter(checkoutItem => checkoutItem.Id === item.Id).length;
@@ -76,10 +65,33 @@ class Locker extends Component {
 	};
 
 	render() {
+		const { isMobile, changeFilter, filter } = this.props;
 		const { loading } = this.state;
 
 		if (loading) return <Loading />;
-		else return <div className="lockerContainer">{this.renderItems()}</div>;
+		else
+			return (
+				<div className="lockerContainer">
+					{isMobile && (
+						<input
+							type="text"
+							placeholder="Search Locker"
+							style={{
+								width: '90vw',
+								border: '1px solid #ccc',
+								height: 26,
+								marginTop: 10,
+								marginBottom: 10,
+								borderRadius: 3,
+								padding: 2
+							}}
+							value={filter}
+							onChange={e => changeFilter(e)}
+						/>
+					)}
+					{this.renderItems()}
+				</div>
+			);
 	}
 }
 
