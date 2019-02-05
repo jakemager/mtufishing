@@ -1,5 +1,5 @@
 # The Fishing Club at Michigan Tech Website
-![mtuFishing Logo](http://mtufishing.club/images/logo.png)
+![mtuFishing Logo](http://mtufishing.com/static/media/logo.201126b6.png)
 
 ## Welcome to the repository for The Fishing Club at Michigan Tech Website
 This is an open repository for anyone that would like execute their skills on a real world product that is used by many students. 
