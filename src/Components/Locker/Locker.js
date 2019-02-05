@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
-import { addToCheckout, removeFromCheckout } from '../../actions/lockerRoom';
-
 import Loading from '../Common/Loading';
 
 import './Locker.css';
+import Item from './Item';
+import MobileItem from './MobileItem';
 
 class Locker extends Component {
 	constructor(props) {
@@ -17,12 +17,16 @@ class Locker extends Component {
 			items: [],
 			filteredItems: [],
 			cartItems: [],
-			hoveredItem: null
+			hoveredItem: null,
+			showInfo: false,
+			isMobile: false
 		};
 	}
 
 	componentDidMount() {
 		this.getItems();
+		window.addEventListener('resize', this.handleWindowSizeChange);
+		this.handleWindowSizeChange();
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -41,6 +45,15 @@ class Locker extends Component {
 		}
 	}
 
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.handleWindowSizeChange);
+	}
+
+	handleWindowSizeChange = () => {
+		console.log(window.innerWidth);
+		this.setState({ isMobile: window.innerWidth <= 650 });
+	};
+
 	getItems = () => {
 		axios({
 			method: 'post',
@@ -51,91 +64,14 @@ class Locker extends Component {
 	};
 
 	renderItems = () => {
-		const { addToCheckout, removeFromCheckout, checkout } = this.props;
-		const { filteredItems, hoveredItem } = this.state;
+		const { checkout } = this.props;
+		const { filteredItems, isMobile } = this.state;
 
 		return filteredItems.map(item => {
 			let inCart = checkout.filter(checkoutItem => checkoutItem.Id === item.Id).length;
-
-			let isHover = hoveredItem === item.Id;
-
-			if (item.quantityAvailable > 0)
-				return (
-					<div
-						key={item.Id}
-						className="itemContainer"
-						onMouseEnter={() => this.setState({ hoveredItem: item.Id })}
-						onMouseLeave={() => this.setState({ hoveredItem: null })}
-					>
-						{inCart ? (
-							<div className="itemImageContainer itemImageContainerOverlay">
-								<div className="inCartOverlay itemImage">
-									<i className="inCartIcon fa fa-check" />
-									<img
-										src={`/server/items/images/${item.image}`}
-										alt={item.name}
-										className="itemImage"
-									/>
-								</div>
-							</div>
-						) : (
-							<div className="itemImageContainer">
-								<img
-									src={`/server/items/images/${item.image}`}
-									alt={item.name}
-									className="itemImage"
-								/>
-							</div>
-						)}
-
-						<div
-							style={
-								inCart
-									? { backgroundColor: '#97db8f', height: '100%', zIndex: '4' }
-									: { height: '100%' }
-							}
-						>
-							<div className="itemTitle">{item.name}</div>
-							<div className="itemAvailability">{item.quantityAvailable} Available</div>
-							{isHover ? (
-								<div className="itemIconsContainer">
-									<i className="itemIcon info fa fa-info" />
-									{inCart ? (
-										<i
-											onClick={() => removeFromCheckout(item.Id)}
-											className="itemIcon minus fa fa-minus"
-										/>
-									) : (
-										<i onClick={() => addToCheckout(item)} className="itemIcon plus fa fa-plus" />
-									)}
-								</div>
-							) : (
-								<span />
-							)}
-						</div>
-					</div>
-				);
-			else
-				return (
-					<div key={item.Id} className="itemContainer">
-						<div className="itemImageContainer itemImageContainerOverlayNotAvaliable">
-							<div className="inCartOverlay itemImage">
-								<img
-									src={`/server/items/images/${item.image}`}
-									alt={item.name}
-									className="itemImage"
-								/>
-							</div>
-						</div>
-
-						<div style={{ backgroundColor: '#fd868d', height: '100%', zIndex: '4' }}>
-							<div className="itemTitle">{item.name}</div>
-							<div className="itemAvailability" style={{ fontWeight: 500 }}>
-								Not Available
-							</div>
-						</div>
-					</div>
-				);
+			if (isMobile)
+				return <MobileItem available={item.quantityAvailable > 0} item={item} inCart={inCart} />;
+			else return <Item available={item.quantityAvailable > 0} item={item} inCart={inCart} />;
 		});
 	};
 
@@ -153,8 +89,5 @@ const mapStateToProps = state => ({
 
 export default connect(
 	mapStateToProps,
-	{
-		addToCheckout,
-		removeFromCheckout
-	}
+	{}
 )(Locker);
