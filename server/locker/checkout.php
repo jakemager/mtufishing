@@ -18,6 +18,28 @@
 	
 	}
 
+
+	// Find equipment manager
+	$getUsers = "SELECT * FROM Users WHERE position = 'Equipment Manager'";
+	$userResults = $conn->query($getUsers);
+
+	$equipmentManger = null;
+
+	if ($userResults->num_rows > 0) {
+		while($info = $userResults->fetch_assoc()) {
+			$equipmentManger = $info['ID'] . '@mtu.edu';
+		}
+
+		$subject = 'MTU Fishing Locker Checkout Request';
+		$message = 'There is a request from ' . $_POST['studentId'] . ' to checkout equipment.';
+		$headers = 'From: ' . $_POST['studentId'] . '@mtu.edu';
+		
+		mail($equipmentManger, $subject, $message, $headers);
+	}
+
+
+
+
 	if (mysqli_multi_query($conn,$sqlLog)) {
 			echo json_encode(true);
 
