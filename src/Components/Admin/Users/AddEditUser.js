@@ -135,6 +135,7 @@ export default class AddEditUser extends Component {
 						<option value="Vice President">Vice President</option>
 						<option value="Treasurer">Treasurer</option>
 						<option value="Sponsorship">Sponsorship</option>
+						<option value="Secretary">Secretary</option>
 						<option value="Public Relations">Public Relations</option>
 						<option value="Equipment Manager">Equipment Manager</option>
 						<option value="Trip Coordinator">Trip Coordinator</option>

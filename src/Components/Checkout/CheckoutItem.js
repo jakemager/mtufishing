@@ -39,7 +39,7 @@ class CheckoutItem extends Component {
 		return (
 			<div className="checkoutItemContainer">
 				<div className="checkoutItemDetailsContainer">
-					<img src={`/${image}`} />
+					<img src={`/server/items/images/${image}`} />
 					<div className="checkoutItemDetails">
 						<div className="details">
 							<p className="title">{name}</p>
